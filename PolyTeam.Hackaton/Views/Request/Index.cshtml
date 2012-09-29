@@ -1,8 +1,15 @@
-﻿@model PolyTeam.Hackaton.Models.SocialRequestModel
+﻿
+@model PolyTeam.Hackaton.Models.SocialRequestModel
 
 <link href="@Url.Content("~/Content/style-stat.css")" rel="stylesheet" type="text/css" /> 
+<link href="@Url.Content("~/Content/style-map.css")" rel="stylesheet" type="text/css" /> 
+<script src="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.js"></script>
+
+    <div id="map"></div>
+    <script src="/Scripts/map.js"></script>
 @using (Html.BeginForm("LogOn", "Account"))
 {
+            
     <div id="panel">
         <fieldset>
             <legend>Інформація користувача</legend>

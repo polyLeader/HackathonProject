@@ -17,7 +17,7 @@ namespace PolyTeam.Hackaton.Controllers
         public struct OsmObject
         {
             public string Road;
-            public string House;
+            public string HouseNumber;
 
         }
 
@@ -62,7 +62,9 @@ namespace PolyTeam.Hackaton.Controllers
         public JsonResult GetObject(float lat, float lon)
         {
             var reguestGET =
-               WebRequest.Create("http://nominatim.openstreetmap.org/reverse?format=xml&lat=" + lat + "&lon=" + lon + "&addressdetails=1");
+                WebRequest.Create("http://nominatim.openstreetmap.org/reverse?format=xml&lat=" +
+                lat.ToString(new CultureInfo("en-US")) + "&lon=" + lon.ToString(new CultureInfo("en-US")) +
+                "&addressdetails=1&accept-language=ru");
 
             reguestGET.Proxy = null;
 
@@ -78,10 +80,14 @@ namespace PolyTeam.Hackaton.Controllers
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(stream);
 
-            var tagHouse = (XmlElement) xmlDoc.GetElementsByTagName("house")[0];
-            var tagRoad = (XmlElement) xmlDoc.GetElementsByTagName("road")[0];
+            var tagHouseNumber = (XmlElement)xmlDoc.GetElementsByTagName("house_number")[0];
+            var tagRoad = (XmlElement)xmlDoc.GetElementsByTagName("road")[0];
 
-            var osmObject = new OsmObject {Road = tagRoad.InnerText, House = tagHouse.InnerText};
+            var osmObject = new OsmObject
+            {
+                Road = tagRoad == null ? null : tagRoad.InnerText,
+                HouseNumber = tagHouseNumber == null ? null : tagHouseNumber.InnerText
+            };
 
             return Json(osmObject);
         }

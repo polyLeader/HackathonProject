@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLogic.Core;
+using PolyTeam.Hackaton.Models;
 using BusinessLogic.Domain;
 
 namespace PolyTeam.Hackaton.Controllers
@@ -14,9 +16,18 @@ namespace PolyTeam.Hackaton.Controllers
 
         public ActionResult Index()
         {
-            var request = new SocialRequest();
-
             return View();
+        }
+
+        public ActionResult Submit(SocialRequestModel request)
+        {
+            var domain = new SocialRequest();
+            domain.Flat = request.Flat;
+            domain.House = request.House;
+            //domain.User = request.User;
+            domain.Problem = request.ProblemModel;
+
+            var repository = SocialRequestRepository.Add();
         }
     }
 }

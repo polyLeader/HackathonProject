@@ -32,18 +32,18 @@ namespace BusinessLogic.Core
 
         public string GenerateCode(int length = 7)
         {
-            string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
-            string CodedString = "";
-            int LenCodedString = Chars.Count() - 1;
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+            var codedString = "";
+            var lenCodedString = chars.Count() - 1;
 
-            Random rnd = new Random();
+            var rnd = new Random();
 
-            while (CodedString.Count() < LenCodedString)
+            while (codedString.Count() < lenCodedString)
             {
-                CodedString += Chars[rnd.Next(0, Chars.Count() - 1)];
+                codedString += chars[rnd.Next(0, chars.Count() - 1)];
             }
 
-            return CodedString;
+            return codedString;
         }
 
         public string WordTranslator(string russianWord)

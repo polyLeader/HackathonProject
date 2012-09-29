@@ -63,6 +63,7 @@
     <Compile Include="Domain\Problem.cs" />
     <Compile Include="Domain\Roles.cs" />
     <Compile Include="Domain\SocialRequest.cs" />
+    <Compile Include="Domain\Street.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

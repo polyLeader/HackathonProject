@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Web.Security;
 using BusinessLogic.Domain;
 
 using BusinessLogic.Domain;
@@ -12,10 +13,12 @@ namespace BusinessLogic.Core
     public class UserRepository : IUserRepository
     {
         private readonly DatabaseContext dataBaseContext;
+        private readonly IUserRepository userRepository;
 
-        public UserRepository(DatabaseContext dataBaseContext)
+        public UserRepository(DatabaseContext dataBaseContext, IUserRepository userRepository)
         {
             this.dataBaseContext = dataBaseContext;
+            this.userRepository = userRepository;
         }
 
         public void CreateUser(User user)
@@ -52,12 +55,15 @@ namespace BusinessLogic.Core
             }
         }
 
-        public void SetRoleToUser(User user)
+        public void SetRoleToUserFromDB (string roleName, string userName)
         {
-            throw new NotImplementedException();
+            if (System.Web.Security.Roles.RoleExists(this.userRepository.GetRoleByName(roleName)
+            {
+                System.Web.Security.Roles.AddUserToRole(userName, roleName);
+            }
         }
 
-        public string GetRoleOfUser (string roleName)
+        public string GetRoleOfUserDB (string roleName)
         {
             return
                 this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(roleName).RoleId).Select(

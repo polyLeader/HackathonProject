@@ -35,8 +35,6 @@ namespace BusinessLogic.Core
             context.Problems.Add(problem);
             problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
-            context.Users.Add(new User { FirstName = "asdf", Password = "7815696ecbf1c96e6894b779456d330e" });
-            context.SaveChanges();
 
             var street = new Street();
 
@@ -68,6 +66,12 @@ namespace BusinessLogic.Core
 
                 context.Users.Add(user);
             }
+
+            var role = new Roles {Id = 1, Name = "Deputy"};
+            context.Roles.Add(role);
+
+            role = new Roles {Id = 2, Name = "User"};
+            context.Roles.Add(role);
 
             var deput = new User
                             {

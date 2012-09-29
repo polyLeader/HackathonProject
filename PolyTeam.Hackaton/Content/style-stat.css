@@ -1,5 +1,7 @@
 #panel
-{   margin-top:60px;
+{
+    padding: 24px 24px 0;
+    margin-top:60px;
     padding: 24px;
 	width:350px;
 	position:relative;

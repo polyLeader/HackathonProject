@@ -12,5 +12,6 @@ namespace BusinessLogic.Domain
         public DbSet<User> Users { get; set; }
         public DbSet<SocialRequest> SocialRequests { get; set; }
         public DbSet<Street> Streets { get; set; }
+        public DbSet<Roles> Roles { get; set; }
     }
 }

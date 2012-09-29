@@ -17,8 +17,6 @@ namespace BusinessLogic.Domain
 
         public string Login { get; set; }
 
-        public string Password { get; set; }
-
         public int RoleId { get; set; }
 
         public string Hash { get; set; }

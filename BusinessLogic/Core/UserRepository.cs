@@ -13,12 +13,12 @@ namespace BusinessLogic.Core
     public class UserRepository : IUserRepository
     {
         private readonly DatabaseContext dataBaseContext;
-        private readonly IUserRepository userRepository;
+        //private readonly IUserRepository userRepository;
 
-        public UserRepository(DatabaseContext dataBaseContext, IUserRepository userRepository)
+        public UserRepository(DatabaseContext dataBaseContext)
         {
             this.dataBaseContext = dataBaseContext;
-            this.userRepository = userRepository;
+           // this.userRepository = userRepository;
         }
 
         public void CreateUser(User user)
@@ -55,19 +55,9 @@ namespace BusinessLogic.Core
             }
         }
 
-        public void SetRoleToUserFromDB (string roleName, string userName)
+        public bool IsDeputy(string userName)
         {
-            if (System.Web.Security.Roles.RoleExists(this.userRepository.GetRoleByName(roleName)
-            {
-                System.Web.Security.Roles.AddUserToRole(userName, roleName);
-            }
-        }
-
-        public string GetRoleOfUserDB (string roleName)
-        {
-            return
-                this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(roleName).RoleId).Select(
-                    x => x.Name).First();
+            return System.Web.Security.Roles.IsUserInRole(userName, "Deputy");
         }
     }
 }

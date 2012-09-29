@@ -68,6 +68,11 @@ namespace BusinessLogic.Core
                 context.Users.Add(user);
             }
 
+            var role = new Roles {Id = 1, Name = "Deputy"};
+            context.Roles.Add(role);
+            role = new Roles {Id = 2, Name = "User"};
+            context.Roles.Add(role);
+
             context.SaveChanges();
 
             base.Seed(context);

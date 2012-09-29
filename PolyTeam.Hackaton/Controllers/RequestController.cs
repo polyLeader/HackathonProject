@@ -9,6 +9,7 @@ using BusinessLogic.Domain;
 
 namespace PolyTeam.Hackaton.Controllers
 {
+    [Authorize(Roles = "Deputy")]
     public class RequestController : Controller
     {
 

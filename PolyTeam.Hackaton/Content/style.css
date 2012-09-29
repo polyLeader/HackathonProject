@@ -80,3 +80,10 @@ background: #000000 !important;
 margin:0;
 position:absolute;
 }
+
+#logindisplay 
+{
+    float: right;
+    right: 0px;
+    width: 100px;
+}

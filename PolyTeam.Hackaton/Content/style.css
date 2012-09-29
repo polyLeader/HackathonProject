@@ -3,7 +3,7 @@ min-width: 1000px;
 background: #000000 !important;
 }
 
-.Form .SubmitButton button {
+.Form .SubmitButton input{
     float: right;
     padding: 6px 20px;
     height: 30px;
@@ -57,7 +57,7 @@ background: #000000 !important;
     box-shadow: inset 2px 2px 6px #EBEBEB, 0 0 4px #646d74, 0 0 0 5px #DCDCDC;
 }
 
-.Form .SubmitButton {
+.Form .SubmitButton ,.RegisterButton button a{
     overflow: hidden;
     margin: 30px -24px 0;
     padding: 22px 24px;

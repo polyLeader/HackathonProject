@@ -11,7 +11,11 @@ namespace BusinessLogic.Domain
 
         public string LastName { get; set; }
 
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        public string SecondName { get; set; }
+
+        public string Login { get; set; }
 
         public string Password { get; set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PolyTeam.Hackaton.Models;
 
 namespace PolyTeam.Hackaton.Controllers
 {
@@ -10,7 +11,7 @@ namespace PolyTeam.Hackaton.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(new LogOnModel());
         }
     }
 }

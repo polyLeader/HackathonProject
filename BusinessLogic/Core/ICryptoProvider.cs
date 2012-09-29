@@ -14,5 +14,7 @@ namespace BusinessLogic.Core
         string ComparePassword(string userPassword, string enteredPassword);
 
         string GenerateCode(int length = 7);
+
+        string GenerateDeputyLogin(string firstName, string lastName);
     }
 }

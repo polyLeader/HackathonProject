@@ -23,40 +23,36 @@ namespace PolyTeam.Hackaton.Controllers
         //
         // GET: /Account/LogOn
 
-        public ActionResult LogOn()
+        /*public ActionResult LogOn()
         {
             return View();
-        }
+        }*/
 
         //
         // POST: /Account/LogOn
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(LogOnModel model)
         {
             if (ModelState.IsValid)
             {
                 if (this.userProcessor.LogOn(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    return RedirectToAction("Index","Request");
+                }
+                else
                     {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Index");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
                 {
                     ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 }
-            }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Index", "Home", model);
         }
 
         //
@@ -88,7 +84,7 @@ namespace PolyTeam.Hackaton.Controllers
                 var user = new User
                 {
                     LastName = model.LastName,
-                    Name = model.UserName,
+                    FirstName = model.UserName,
                     Password = model.Password,
                     RoleId = 2,
                     Street = model.UserStreet,

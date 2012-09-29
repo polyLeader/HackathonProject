@@ -63,12 +63,19 @@
     <Compile Include="Domain\Problem.cs" />
     <Compile Include="Domain\Roles.cs" />
     <Compile Include="Domain\SocialRequest.cs" />
+    <Compile Include="Domain\Street.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ParseHelpers\ParseHelpers.csproj">
+      <Project>{9A1B5AC8-43AD-46F2-9D9E-7D19E63CBC64}</Project>
+      <Name>ParseHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

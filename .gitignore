@@ -1,0 +1,16 @@
+bin
+obj
+*ReSharper*
+packages
+*.pyc
+*.db
+*.html
+*.suo
+*.user
+*.dotCover
+2012-07-*
+2012-08-*
+*.ncrunchsolution
+*.MDF
+*.ldf
+*.stylecop

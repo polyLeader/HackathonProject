@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Data.Entity;
 using BusinessLogic.Domain;
+using BusinessLogic.Core;
 using ParseHelpers;
+
 
 namespace BusinessLogic.Core
 {
@@ -27,7 +29,7 @@ namespace BusinessLogic.Core
             context.Problems.Add(problem);
             problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
-            context.Users.Add(new User { Name = "asdf", Password = "7815696ecbf1c96e6894b779456d330e" });
+            context.Users.Add(new User { FirstName = "asdf", Password = "7815696ecbf1c96e6894b779456d330e" });
             context.SaveChanges();
 
             var street = new Street();
@@ -39,6 +41,25 @@ namespace BusinessLogic.Core
                 street.Lang = street1.Lang;
                 street.Name = street1.Name;
                 context.Streets.Add(street);
+            }
+
+            var user = new User();
+
+            var deputies = Parser.GetDeputies("deputies.list");
+
+            foreach (var deputy in deputies)
+            {
+                user.Street = null;
+                user.House = null;
+                user.Flat = null;
+                user.FirstName = deputy.FirstName;
+                user.LastName = deputy.LastName;
+                user.SecondName = deputy.SecondName;
+                user.Party = deputy.Party;
+                user.Password = CryptoProvider.GenerateCode(8);
+                user.Login = Parser.GenerateDeputyLogin(deputy.FirstName, deputy.LastName);
+
+                context.Users.Add(user);
             }
 
             context.SaveChanges();

@@ -1,1 +1,9 @@
-﻿
+﻿<link href="@Url.Content("~/Content/style-stat.css")" rel="stylesheet" type="text/css" /> 
+@using (Html.BeginForm("LogOn", "Account"))
+{
+<div id="panel">
+	<h3>Статистика</h3>
+	<p>1. Заявок получено...</p>
+	<p>2. Заявок обработано...</p>
+</div>
+}    

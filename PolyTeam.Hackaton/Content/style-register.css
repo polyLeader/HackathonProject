@@ -1,0 +1,9 @@
+#register 
+{
+    background-color: #F3F3F3;
+    margin-left:30%;  
+}
+.SubmitButton input
+{
+    float:none !important;
+}

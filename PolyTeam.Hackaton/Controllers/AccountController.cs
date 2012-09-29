@@ -64,7 +64,7 @@ namespace PolyTeam.Hackaton.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Index");
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -101,7 +101,7 @@ namespace PolyTeam.Hackaton.Controllers
                 {
                     this.userProcessor.LogOn(model.Login, model.Password);
                     var CurUser = this.userProcessor.GetUserByName(model.Login);
-                    return this.RedirectToAction("Index", "Index");
+                    return this.RedirectToAction("Index", "Request");
                 }
             }
 

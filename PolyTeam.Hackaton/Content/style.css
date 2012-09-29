@@ -3,7 +3,7 @@ min-width: 1000px;
 background: #000000 !important;
 }
 
-.Form .SubmitButton input{
+.SubmitButton input{
     float: right;
     padding: 6px 20px;
     height: 30px;
@@ -16,7 +16,7 @@ background: #000000 !important;
     text-shadow: 0 -1px rgba(0,0,0,0.15);
     outline: none;
 }
-.Form .SubmitButton button::-moz-focus-inner{border:0}
+.SubmitButton button::-moz-focus-inner{border:0}
 
 .Form {
 	float: right;

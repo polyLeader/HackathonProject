@@ -1,0 +1,31 @@
+#panel
+{
+    padding: 24px 24px 0;
+	width:350px;
+	position:relative;
+	float:right;
+	background-color:#F3F3F3;
+}
+#panel .field{
+	margin: 15px;
+}
+#panel .SubmitButton input{
+	position:relative;
+	float:right;
+	margin:0 50px;
+	width:100px;
+}
+#panel .submit {
+	float:left;
+	margin: 0;
+	padding:0;
+	border:0;
+}
+legend, .field
+{
+    margin: 0 15px 0 0;
+}
+form
+{
+    margin:0 !important;
+    }

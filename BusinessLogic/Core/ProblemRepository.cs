@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using BusinessLogic.Domain;
-using BusinessLogic.domen;
 
 namespace BusinessLogic.Core
 {

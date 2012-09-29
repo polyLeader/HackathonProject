@@ -46,10 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DatabaseContext.cs" />
-    <Compile Include="Domain\Deputy.cs" />
+    <Compile Include="Core\IProblemRepository.cs" />
+    <Compile Include="Core\IUserRepository.cs" />
+    <Compile Include="Core\ProblemRepository.cs" />
+    <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\Problem.cs" />
-    <Compile Include="Domain\Requster.cs" />
     <Compile Include="Domain\SocialRequest.cs" />
+    <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

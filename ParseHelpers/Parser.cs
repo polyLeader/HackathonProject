@@ -15,6 +15,13 @@ namespace ParseHelpers
             public string Lang;
         }
 
+        public struct Deputy
+        {
+            public string FirstName;
+            public string LastName;
+            public string SecondName;
+        }
+
         public static List<Street> GetStreets(string inputFileName)
         {
             if (inputFileName == null)
@@ -82,6 +89,11 @@ namespace ParseHelpers
             }
 
             return allStreets;
+        }
+
+        public static List<Deputy> GetDeputies(string inputFileName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

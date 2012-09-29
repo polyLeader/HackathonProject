@@ -14,6 +14,13 @@ namespace PolyTeam.Hackaton.Controllers
             public double Lon;
         }
 
+        public struct OsmObject
+        {
+            public string Road;
+            public string House;
+
+        }
+
         //
         // GET: /Map/
 
@@ -41,16 +48,42 @@ namespace PolyTeam.Hackaton.Controllers
 
             if (tagPlace == null)
             {
-                throw new Exception("Can't find this address: " + street + ", " + number + ".");
+                return Json(null);
             }
-
+            
             var lat = Convert.ToSingle(tagPlace.GetAttribute("lat"), new CultureInfo("en-US"));
             var lon = Convert.ToSingle(tagPlace.GetAttribute("lon"), new CultureInfo("en-US"));
 
-            var coord = new Coordinates {Lat = lat, Lon = lon};
+            var coord = new Coordinates { Lat = lat, Lon = lon };
 
             return Json(coord);
         }
 
+        public JsonResult GetObject(float lat, float lon)
+        {
+            var reguestGET =
+               WebRequest.Create("http://nominatim.openstreetmap.org/reverse?format=xml&lat=" + lat + "&lon=" + lon + "&addressdetails=1");
+
+            reguestGET.Proxy = null;
+
+            var webResponse = reguestGET.GetResponse();
+
+            var stream = webResponse.GetResponseStream();
+
+            if (stream == null)
+            {
+                throw new Exception("Can't get response from server.");
+            }
+
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(stream);
+
+            var tagHouse = (XmlElement) xmlDoc.GetElementsByTagName("house")[0];
+            var tagRoad = (XmlElement) xmlDoc.GetElementsByTagName("road")[0];
+
+            var osmObject = new OsmObject {Road = tagRoad.InnerText, House = tagHouse.InnerText};
+
+            return Json(osmObject);
+        }
     }
 }

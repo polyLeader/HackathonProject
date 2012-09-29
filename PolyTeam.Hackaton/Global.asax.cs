@@ -40,7 +40,7 @@ namespace PolyTeam.Hackaton
             return kernel;
         }
 
-        protected void OnApplicationStarted()
+        protected override void OnApplicationStarted()
         {
             AreaRegistration.RegisterAllAreas();
 

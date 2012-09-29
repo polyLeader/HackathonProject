@@ -10,7 +10,6 @@ namespace PolyTeam.Hackaton.Controllers
     {
         public ActionResult Index()
         {
-
             return View();
         }
     }

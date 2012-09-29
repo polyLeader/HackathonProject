@@ -14,28 +14,39 @@
         <script src="@Url.Content("~/Scripts/jquery-1.8.2.js")" type="text/javascript"></script>
     </head>
     <body> 
-    <form class="Form" action="" method="post">
-        <div class="field">
-            <label>Имя пользователя:</label>
-            <div class="input"><input type="text" name="" value="" id="login" /></div>
-        </div>
-        <div class="field">
-            <label>Пароль:</label>
-            <div class="input"><input type="password" name="" value="" id="pass" /></div>
-        </div>
-        <div class="SubmitButton">
-            <button type="submit">Войти</button>
-            <label id="remember"><input name="" type="checkbox" value="" /> Запомнить меня</label>
-        </div>
-    </form>
-	<div id="info">
-		<div class="uneditable-textarea">
-				<div class="triangle-up"></div>
-				<h3>About</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu urna arcu, in malesuada magna. Quisque nec pulvinar mauris. Sed velit lacus, interdum a feugiat placerat, varius vel neque. In vel egestas ligula. Pellentesque et magna dolor, in feugiat magna. Morbi id tellus lectus, in imperdiet sem. Aliquam orci dolor, vestibulum non mattis varius, ullamcorper at tortor. Praesent tortor erat, rutrum sit amet posuere consequat, commodo quis odio. Ut tellus leo, euismod eu faucibus cursus, accumsan adipiscing lacus. Suspendisse a pulvinar nisl. Vivamus felis lacus, vehicula id placerat vitae, ultricies ac quam.</p>
-				<p>Vivamus vitae sem turpis, vel varius dui. Mauris scelerisque tincidunt diam a vehicula. In sagittis molestie sem, non commodo erat vulputate nec. Proin magna mi, consequat id vehicula eu, facilisis sed magna. Duis ac sapien in diam venenatis elementum id non massa. Maecenas commodo fermentum scelerisque. Etiam sit amet hendrerit orci.</p>
-				<p>Integer risus tellus, aliquam in eleifend a, hendrerit vel quam. Etiam vel nisi eu quam vestibulum elementum eu sit amet lectus. Quisque in viverra quam. Pellentesque pharetra varius libero sit amet auctor. Donec sed sapien id orci aliquam condimentum a vitae ipsum. Phasellus elit nisi, suscipit vitae bibendum a, sagittis eu velit. Quisque nec justo lorem, eget pharetra ipsum.</p>
-		</div>
-	</div>
+        <form class="Form" action="" method="post">
+            <div class="field">
+                <label>Имя пользователя:</label>
+                <div class="input"><input type="text" name="" value="" id="login" /></div>
+            </div>
+            <div class="field">
+                <label>Пароль:</label>
+                <div class="input"><input type="password" name="" value="" id="pass" /></div>
+            </div>
+            <div class="SubmitButton">
+                <button type="submit">Войти</button>
+                <label id="remember"><input name="" type="checkbox" value="" /> Запомнить меня</label>
+            </div>
+        </form>
+	    <div id="info">
+		    <div class="uneditable-textarea">
+				    <div class="triangle"></div>
+				    <h3>About</h3>
+				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu urna arcu, in malesuada magna. Quisque nec pulvinar mauris. Sed velit lacus, interdum a feugiat placerat, varius vel neque. In vel egestas ligula. Pellentesque et magna dolor, in feugiat magna. Morbi id tellus lectus, in imperdiet sem. Aliquam orci dolor, vestibulum non mattis varius, ullamcorper at tortor. Praesent tortor erat, rutrum sit amet posuere consequat, commodo quis odio. Ut tellus leo, euismod eu faucibus cursus, accumsan adipiscing lacus. Suspendisse a pulvinar nisl. Vivamus felis lacus, vehicula id placerat vitae, ultricies ac quam.</p>
+				    <p>Vivamus vitae sem turpis, vel varius dui. Mauris scelerisque tincidunt diam a vehicula. In sagittis molestie sem, non commodo erat vulputate nec. Proin magna mi, consequat id vehicula eu, facilisis sed magna. Duis ac sapien in diam venenatis elementum id non massa. Maecenas commodo fermentum scelerisque. Etiam sit amet hendrerit orci.</p>
+				    <p>Integer risus tellus, aliquam in eleifend a, hendrerit vel quam. Etiam vel nisi eu quam vestibulum elementum eu sit amet lectus. Quisque in viverra quam. Pellentesque pharetra varius libero sit amet auctor. Donec sed sapien id orci aliquam condimentum a vitae ipsum. Phasellus elit nisi, suscipit vitae bibendum a, sagittis eu velit. Quisque nec justo lorem, eget pharetra ipsum.</p>
+		    </div>
+	    </div>
+        <script>
+            $(function () {
+                $(document).on('click', '.triangle', function (e) {
+                    var such = $('.triangle');
+                    such.toggleClass("up");
+                    if (such.hasClass('up')) {
+                        
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

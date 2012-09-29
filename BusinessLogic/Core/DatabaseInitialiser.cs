@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
 using BusinessLogic.Domain;
+using ParseHelpers;
 
 namespace BusinessLogic.Core
 {
@@ -27,6 +29,20 @@ namespace BusinessLogic.Core
             context.Problems.Add(problem);
             context.Users.Add(new User { Name = "asdf", Password = "7815696ecbf1c96e6894b779456d330e" });
             context.SaveChanges();
+
+            var street = new Street();
+
+            var streets = Parser.GetStreets("donetsk.osm");
+
+            foreach (var street1 in streets)
+            {
+                street.Lang = street1.Lang;
+                street.Name = street1.Name;
+                context.Streets.Add(street);
+            }
+
+            context.SaveChanges();
+
             base.Seed(context);
         }
     }

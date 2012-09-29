@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace PolyTeam.Hackaton.Models
 {
     public class SocialRequestModel
     {
-       // public User User { get; set; }
+        public UserModel User { get; set; }
         public IList<SelectListItem> ProblemList { get; set; }
         public int ProblemId { get; set; }
         public string Street { get; set; }

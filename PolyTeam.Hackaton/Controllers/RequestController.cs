@@ -11,6 +11,15 @@ namespace PolyTeam.Hackaton.Controllers
 {
     public class RequestController : Controller
     {
+
+        private readonly ProblemRepository problemRepository;
+        private readonly SocialRequestRepository socialRequestRepository;
+
+        public RequestController(ProblemRepository repository, SocialRequestRepository socialRequestRepository)
+        {
+            this.problemRepository = repository;
+            this.socialRequestRepository = socialRequestRepository;
+        }
         //
         // GET: /Request/
 
@@ -18,21 +27,6 @@ namespace PolyTeam.Hackaton.Controllers
         {
             return View();
         }
-
-        private readonly ProblemRepository problemRepository;
-
-        public RequestController (ProblemRepository repository)
-        {
-            this.problemRepository = repository;
-        }
-
-        private readonly SocialRequestRepository requestRepository;
-
-        public RequestController(SocialRequestRepository repository)
-        {
-            this.requestRepository = repository;
-        } 
-
 
         public ActionResult Submit(SocialRequestModel request)
         {
@@ -42,8 +36,8 @@ namespace PolyTeam.Hackaton.Controllers
             domain.House = request.House;
             //domain.User = request.User;
             domain.Street = request.Street;
-            this.requestRepository.Add(domain);
-            return View();
+            this.socialRequestRepository.Add(domain);
+            return View("Index");
         }
     }
 }

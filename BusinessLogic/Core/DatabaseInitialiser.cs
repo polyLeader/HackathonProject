@@ -7,7 +7,7 @@ using BusinessLogic.Domain;
 
 namespace BusinessLogic.Core
 {
-    public class DatabaseInitialiser:DropCreateDatabaseIfModelChanges<DatabaseContext>
+    public class DatabaseInitialiser:DropCreateDatabaseAlways<DatabaseContext>
     {
         protected override void Seed(DatabaseContext context)
         {
@@ -25,6 +25,8 @@ namespace BusinessLogic.Core
             context.Problems.Add(problem);
             problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
+            context.Users.Add(new User { Name = "asdf", Password = "7815696ecbf1c96e6894b779456d330e" });
+            context.SaveChanges();
             base.Seed(context);
         }
     }

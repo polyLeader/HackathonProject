@@ -84,7 +84,7 @@ namespace PolyTeam.Hackaton.Controllers
                 var user = new User
                 {
                     LastName = model.LastName,
-                    Name = model.UserName,
+                    FirstName = model.UserName,
                     Password = model.Password,
                     RoleId = 2,
                     Street = model.UserStreet,

@@ -23,14 +23,14 @@ namespace BusinessLogic.Core
         public bool CreateUser(User user)
         {
             //var CurUser = this.userRepository.GetUserByName(user.Name);
-            if (GetUserByName(user.Name) != null)
+            if (GetUserByName(user.FirstName) != null)
             {
                 return false;
             }
 
             var newUser = new User() {
                 LastName = user.LastName,
-                Name = user.Name,
+                FirstName  = user.FirstName,
                 Password = this.cryptoProvider.EncryptString(user.Password),
                 RoleId = 2,
                 Street = user.Street,
@@ -55,7 +55,7 @@ namespace BusinessLogic.Core
 
             if (this.cryptoProvider.ComparePassword(user.Password, userPassword) == null)
             {
-                FormsAuthentication.SetAuthCookie(user.Name, true);
+                FormsAuthentication.SetAuthCookie(user.FirstName, true);
                 return true;
             }
 

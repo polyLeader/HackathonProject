@@ -34,7 +34,7 @@ namespace BusinessLogic.Core
             return null;
         }
 
-        public static string GenerateCode(int length = 7)
+        public string GenerateCode(int length = 7)
         {
             string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
             string CodedString = "";

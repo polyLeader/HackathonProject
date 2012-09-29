@@ -9,7 +9,7 @@ using ParseHelpers;
 
 namespace BusinessLogic.Core
 {
-    public class DatabaseInitialiser:DropCreateDatabaseAlways<DatabaseContext>
+    public class DatabaseInitialiser:DropCreateDatabaseIfModelChanges<DatabaseContext>
     {
         protected override void Seed(DatabaseContext context)
         {

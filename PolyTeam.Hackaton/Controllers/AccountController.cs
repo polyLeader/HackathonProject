@@ -32,19 +32,16 @@ namespace PolyTeam.Hackaton.Controllers
         // POST: /Account/LogOn
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(LogOnModel model)
         {
             if (ModelState.IsValid)
             {
                 if (this.userProcessor.LogOn(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    else
+                    return RedirectToAction("Index","Request");
+                }
+                else
                     {
                         return RedirectToAction("Index", "Home");
                     }
@@ -53,7 +50,6 @@ namespace PolyTeam.Hackaton.Controllers
                 {
                     ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 }
-            }
 
             // If we got this far, something failed, redisplay form
             return RedirectToAction("Index", "Home", model);

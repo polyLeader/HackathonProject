@@ -32,7 +32,7 @@ namespace BusinessLogic.Core
                 LastName = user.LastName,
                 SecondName = user.SecondName,
                 Login = user.Login,
-                Hash = this.cryptoProvider.EncryptString(user.Password),
+                Hash = this.cryptoProvider.EncryptString(user.Hash),
                 RoleId = 2,
                 Street = user.Street,
                 House = user.House,
@@ -54,7 +54,7 @@ namespace BusinessLogic.Core
                 return false;
             }
 
-            if (this.cryptoProvider.ComparePassword(user.Password, userPassword))
+            if (this.cryptoProvider.ComparePassword(user.Hash, userPassword))
             {
                 FormsAuthentication.SetAuthCookie(user.Login, true);
                 return true;

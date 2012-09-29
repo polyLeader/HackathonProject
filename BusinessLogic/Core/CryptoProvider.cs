@@ -19,22 +19,18 @@ namespace BusinessLogic.Core
             return Convert.ToBase64String(md5.ComputeHash(encoding.GetBytes(userPassword)));
         }
 
-        public string CreateHash()
+        public string CreateHash(string userPassword)
         {
-            return GenerateCode();
+            userPassword = EncryptString(userPassword);
+            return EncryptString(userPassword);
         }
 
-        public string ComparePassword(string userPassword, string enteredPassword)
+        public bool ComparePassword(string userPassword, string enteredPassword)
         {
-            if (userPassword == EncryptString(enteredPassword))
-            {
-                return CreateHash();
-            }
-
-            return null;
+            return CreateHash(enteredPassword) == userPassword;
         }
 
-        public static string GenerateCode(int length = 7)
+        public string GenerateCode(int length = 7)
         {
             string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
             string CodedString = "";

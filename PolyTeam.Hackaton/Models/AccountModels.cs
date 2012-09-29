@@ -26,12 +26,20 @@ namespace PolyTeam.Hackaton.Models
     public class RegisterModel
     {
         [Required]
+        [Display(Name = "Логін")]
+        public string Login { get; set; }
+
+        [Required]
         [Display(Name = "Прізвище")]
         public string LastName { get; set; }
 
         [Required]
         [Display(Name = "Ім'я")]
-        public string UserName { get; set; }
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "По батькові")]
+        public string SecondName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "{0} повинно бути мінімум {2} символи", MinimumLength = 4)]

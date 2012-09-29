@@ -13,6 +13,12 @@ namespace BusinessLogic.Core
 {
     public class DatabaseInitialiser:DropCreateDatabaseIfModelChanges<DatabaseContext>
     {
+        private readonly ICryptoProvider _cryptoProvider;
+        public DatabaseInitialiser(ICryptoProvider cryptoProvider)
+        {
+            _cryptoProvider = cryptoProvider;
+        }
+
         protected override void Seed(DatabaseContext context)
         {
             var problem = new Problem {Name = "Водопровід"};
@@ -56,7 +62,7 @@ namespace BusinessLogic.Core
                 user.LastName = deputy.LastName;
                 user.SecondName = deputy.SecondName;
                 user.Party = deputy.Party;
-                user.Password = CryptoProvider.GenerateCode(8);
+                user.Password = _cryptoProvider.GenerateCode(8);
                 user.Login = Parser.GenerateDeputyLogin(deputy.FirstName, deputy.LastName);
 
                 context.Users.Add(user);

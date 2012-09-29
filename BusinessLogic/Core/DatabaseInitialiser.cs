@@ -63,11 +63,27 @@ namespace BusinessLogic.Core
                 user.SecondName = deputy.SecondName;
                 user.Party = deputy.Party;
                 user.RoleId = 1;
-                user.Password = _cryptoProvider.GenerateCode(8);
+                user.Hash = _cryptoProvider.EncryptString(_cryptoProvider.GenerateCode(8));
                 user.Login = _cryptoProvider.GenerateDeputyLogin(deputy.FirstName, deputy.LastName);
 
                 context.Users.Add(user);
             }
+
+            var deput = new User
+                            {
+                                FirstName = "Dima",
+                                Flat = null,
+                                House = null,
+                                Street = null,
+                                LastName = "Beseda",
+                                Login = "Dimka",
+                                RoleId = 1,
+                                SecondName = "Genadievich",
+                                Party = "Партия регионов",
+                                Hash = _cryptoProvider.EncryptString("12345678"),
+                            };
+
+            context.Users.Add(deput);
 
             context.SaveChanges();
 

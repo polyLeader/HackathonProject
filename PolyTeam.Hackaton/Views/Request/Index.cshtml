@@ -1,18 +1,21 @@
 ﻿@model PolyTeam.Hackaton.Models.SocialRequestModel
-@using (Html.BeginForm("LogOn","Account")) {
+
+<link href="@Url.Content("~/Content/style-stat.css")" rel="stylesheet" type="text/css" /> 
+@using (Html.BeginForm("LogOn", "Account"))
+{
     <div id="panel">
         <fieldset>
             <legend>Інформація користувача</legend>
 
-            <div class="editor-label" class="field">
+            <div class="field editor-label">
                 @Html.LabelFor(m => m.Street)
                 @Html.TextBoxFor(m => m.Street)
             </div>
-            <div class="editor-field" class="field">
+            <div class="field editor-label">
                 @Html.LabelFor(m => m.House)
                 @Html.TextBoxFor(m => m.House)
             </div>
-            <div class="editor-field" class="field">
+            <div class="field editor-label">
                 @Html.LabelFor(m => m.Flat)
                 @Html.TextBoxFor(m => m.Flat)
             </div>

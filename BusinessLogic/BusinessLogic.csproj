@@ -54,10 +54,12 @@
     <Compile Include="Core\ICryptoProvider.cs" />
     <Compile Include="Core\IProblemRepository.cs" />
     <Compile Include="Core\ISocialRequestRepository.cs" />
+    <Compile Include="Core\IStreetRepository.cs" />
     <Compile Include="Core\IUserProcessor.cs" />
     <Compile Include="Core\IUserRepository.cs" />
     <Compile Include="Core\ProblemRepository.cs" />
     <Compile Include="Core\SocialRequestRepository.cs" />
+    <Compile Include="Core\StreetRepository.cs" />
     <Compile Include="Core\UserProcessor.cs" />
     <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\Problem.cs" />

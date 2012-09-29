@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using BusinessLogic.Domain;
 
 using BusinessLogic.Domain;
 
@@ -54,6 +55,13 @@ namespace BusinessLogic.Core
         public void SetRoleToUser(User user)
         {
             throw new NotImplementedException();
+        }
+
+        public string GetRoleOfUser (string roleName)
+        {
+            return
+                this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(roleName).RoleId).Select(
+                    x => x.Name).First();
         }
     }
 }

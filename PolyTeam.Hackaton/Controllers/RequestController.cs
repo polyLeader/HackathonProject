@@ -19,15 +19,23 @@ namespace PolyTeam.Hackaton.Controllers
             return View();
         }
 
+        private readonly ProblemRepository repository;
+
+        public RequestController (ProblemRepository repository)
+        {
+            this.repository = repository;
+        } 
+
         public ActionResult Submit(SocialRequestModel request)
         {
             var domain = new SocialRequest();
+           // this.repository = ProblemRepository.GetById(request.ProblemId);
             domain.Flat = request.Flat;
             domain.House = request.House;
             //domain.User = request.User;
-            domain.Problem = request.ProblemModel;
+            //domain.Problem = 
+            return View();
 
-            var repository = SocialRequestRepository.Add();
         }
     }
 }

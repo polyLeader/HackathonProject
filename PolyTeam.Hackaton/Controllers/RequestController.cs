@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLogic.Domain;
 
 namespace PolyTeam.Hackaton.Controllers
 {
@@ -13,8 +14,9 @@ namespace PolyTeam.Hackaton.Controllers
 
         public ActionResult Index()
         {
+            var request = new SocialRequest();
+
             return View();
         }
-
     }
 }

@@ -19,22 +19,36 @@ namespace BusinessLogic.Core
 
         public void CreateUser(User user)
         {
-            //this.dataBaseContext.Entry
+            this.dataBaseContext.Entry(user).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
         }
 
         public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            this.dataBaseContext.Entry(user).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
         }
 
         public void DeleteUser(int userId)
         {
-            throw new NotImplementedException();
+            User user = this.dataBaseContext.Users.Single(x => x.Id == userId);
+            this.dataBaseContext.Users.Remove(user);
+            this.dataBaseContext.SaveChanges();
+
+
         }
 
-        public void GetUserByName(string userName)
+        public User GetByName(string userName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return this.dataBaseContext.Users.ToList().Single(it => it.Name == userName);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
 
         public void SetRoleToUser(User user)

@@ -15,7 +15,7 @@ namespace BusinessLogic.Core
 
         void DeleteUser(int userId);
 
-        void GetUserByName(string userName);
+        User GetByName(string userName);
 
         void SetRoleToUser(User user);
 

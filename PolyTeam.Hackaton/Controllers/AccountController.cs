@@ -5,13 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
-using PolyTeam.Hackaton.Models;
+using BusinessLogic.Domain;
+using PolyTeam.HakProject.Models;
+using BusinessLogic.Core;
+//using BusinessLogic.Domain;
 
-namespace PolyTeam.Hackaton.Controllers
+namespace PolyTeam.HakProject.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IUserProcessor userProcessor;
 
+        public AccountController(IUserProcessor userProcessor)
+        {
+            this.userProcessor = userProcessor;
+        }
         //
         // GET: /Account/LogOn
 
@@ -28,7 +36,7 @@ namespace PolyTeam.Hackaton.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                if (this.userProcessor.LogOn(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
@@ -38,7 +46,7 @@ namespace PolyTeam.Hackaton.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Index");
                     }
                 }
                 else
@@ -58,7 +66,7 @@ namespace PolyTeam.Hackaton.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Index");
         }
 
         //
@@ -66,7 +74,7 @@ namespace PolyTeam.Hackaton.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            return View(new RegisterModel());
         }
 
         //
@@ -77,77 +85,28 @@ namespace PolyTeam.Hackaton.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                var user = new User
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+                    LastName = model.LastName,
+                    Name = model.UserName,
+                    Password = model.Password,
+                    RoleId = 2,
+                    Street = model.UserStreet,
+                    House = model.UserHouse,
+                    Flat = Convert.ToInt32(model.UserFlat),
+                    Party = model.UserParty,
+                    PhoneNumber = model.UserPhoneNumber
+                };
+                if (this.userProcessor.CreateUser(user))
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ChangePassword
-
-        [Authorize]
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/ChangePassword
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
-        {
-            if (ModelState.IsValid)
-            {
-
-                // ChangePassword will throw an exception rather
-                // than return false in certain failure scenarios.
-                bool changePasswordSucceeded;
-                try
-                {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
-                }
-                catch (Exception)
-                {
-                    changePasswordSucceeded = false;
-                }
-
-                if (changePasswordSucceeded)
-                {
-                    return RedirectToAction("ChangePasswordSuccess");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                    this.userProcessor.LogOn(model.UserName, model.Password);
+                    var CurUser = this.userProcessor.GetUserByName(model.UserName);
+                    return this.RedirectToAction("Index", "Index");
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ChangePasswordSuccess
-
-        public ActionResult ChangePasswordSuccess()
-        {
-            return View();
+            ModelState.AddModelError(string.Empty, "Wrong registration data");
+            return this.View(model);
         }
 
         #region Status Codes

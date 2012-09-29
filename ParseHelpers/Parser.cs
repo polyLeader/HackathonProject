@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace Parser
+namespace ParseHelpers
 {
     public static class Parser
     {

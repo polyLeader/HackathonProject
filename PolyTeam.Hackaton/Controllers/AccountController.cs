@@ -23,10 +23,10 @@ namespace PolyTeam.Hackaton.Controllers
         //
         // GET: /Account/LogOn
 
-        public ActionResult LogOn()
+        /*public ActionResult LogOn()
         {
             return View();
-        }
+        }*/
 
         //
         // POST: /Account/LogOn
@@ -46,7 +46,7 @@ namespace PolyTeam.Hackaton.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Index");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
@@ -56,7 +56,7 @@ namespace PolyTeam.Hackaton.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Index", "Home", model);
         }
 
         //

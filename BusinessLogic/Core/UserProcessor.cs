@@ -23,7 +23,7 @@ namespace BusinessLogic.Core
         public bool CreateUser(User user)
         {
             //var CurUser = this.userRepository.GetUserByName(user.Name);
-            if (GetUserByName(user.Name) == null)
+            if (GetUserByName(user.Name) != null)
             {
                 return false;
             }

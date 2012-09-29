@@ -11,57 +11,57 @@ namespace PolyTeam.Hackaton.Models
     public class LogOnModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Ім'я користувача")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запам'ятати?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "Last name")]
+        [Display(Name = "Прізвище")]
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Ім'я")]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
+        [StringLength(100, ErrorMessage = "{0} повинно бути мінімум {2} символи", MinimumLength = 4)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Підтвердити пароль")]
+        [Compare("Password", ErrorMessage = "Пароль та підтвердження не співпадають")]
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "User street")]
+        [Display(Name = "Вулиця")]
         public string UserStreet { get; set; }
 
         [Required]
-        [Display(Name = "User house")]
+        [Display(Name = "Дім")]
         public string UserHouse { get; set; }
 
         [Required]
-        [Display(Name = "User flat")]
+        [Display(Name = "Квартира")]
         public string UserFlat { get; set; }
 
         [Required]
-        [Display(Name = "User Party")]
+        [Display(Name = "Партія")]
         public string UserParty { get; set; }
 
         [Required]
-        [Display(Name = "User phone number")]
+        [Display(Name = "Телефон")]
         public string UserPhoneNumber { get; set; }
     }
 }

@@ -11,24 +11,20 @@ namespace BusinessLogic.Core
     {
         protected override void Seed(DatabaseContext context)
         {
-            var problem = new Problem {Name = "Kanalison"};
-            var user = new User
-                           {
-                               LastName = "sdf",
-                               Name = "Pisun",
-                               Flat = 2,
-                               Hash = "493945",
-                               House = "1",
-                               Party = "Udar",
-                               Password = "YaSok",
-                               PhoneNumber = "+380000000",
-                               RoleId = 2,
-                               Street = "Gitler"
-                           };
+            var problem = new Problem {Name = "Водопровод"};
             context.Problems.Add(problem);
-            context.Users.Add(user);
-            context.SocialRequests.Add(new SocialRequest
-                                           {Flat = "5", House = "2", Problem = problem, Street = "Her", User = user});
+            problem = new Problem { Name = "Газопровод" };
+            context.Problems.Add(problem);
+            problem = new Problem { Name = "Канализация" };
+            context.Problems.Add(problem);
+            problem = new Problem { Name = "Кровля" };
+            context.Problems.Add(problem);
+            problem = new Problem { Name = "Електроснабжение" };
+            context.Problems.Add(problem);
+            problem = new Problem { Name = "Предаварийное состояние здания" };
+            context.Problems.Add(problem);
+            problem = new Problem { Name = "Лифт" };
+            context.Problems.Add(problem);
             base.Seed(context);
         }
     }

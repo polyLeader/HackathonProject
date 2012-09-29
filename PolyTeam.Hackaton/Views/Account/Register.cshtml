@@ -1,5 +1,6 @@
 ﻿@model PolyTeam.Hackaton.Models.RegisterModel
-
+<link href="@Url.Content("~/Content/style-stat.css")" rel="stylesheet" type="text/css" /> 
+<link href="@Url.Content("~/Content/style-register.css")" rel="stylesheet" type="text/css" /> 
 @{
     ViewBag.Title = "Register";
 }
@@ -15,9 +16,10 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
-    <div>
+    <div id="register">
         <fieldset>
             <legend>Account Information</legend>
 
@@ -110,7 +112,9 @@
               </div>
 
             <p>
-                <input type="submit" value="Register" />
+                <div class="SubmitButton">
+                    <input type="submit" value="Register" />
+                </div>
             </p>
         </fieldset>
     </div>

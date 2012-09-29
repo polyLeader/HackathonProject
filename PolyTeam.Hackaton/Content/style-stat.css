@@ -5,6 +5,9 @@
 	position:relative;
 	float:right;
 	background-color:#F3F3F3;
+	height: 100%;
+	border-bottom-right-radius:8px;
+    border-bottom-left-radius:8px;
 }
 #panel .field{
 	margin: 15px;

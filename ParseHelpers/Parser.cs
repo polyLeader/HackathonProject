@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -20,6 +18,7 @@ namespace ParseHelpers
             public string FirstName;
             public string LastName;
             public string SecondName;
+            public string Party;
         }
 
         public static List<Street> GetStreets(string inputFileName)
@@ -93,7 +92,37 @@ namespace ParseHelpers
 
         public static List<Deputy> GetDeputies(string inputFileName)
         {
-            throw new NotImplementedException();
+            if (inputFileName == null)
+            {
+                throw new IOException("Incorrect file name!");
+            }
+
+            var deputies = new List<Deputy>();
+            var deputy = new Deputy();
+
+            var streamReader = new StreamReader(inputFileName, Encoding.UTF8);
+
+            while (true)
+            {
+                var currentString = streamReader.ReadLine();
+
+                if (currentString == null) break;
+
+                var tmp = currentString.Split(',');
+
+                // delete space char
+                deputy.Party = tmp[1].Remove(0, 1);
+
+                var fullName = tmp[0].Split(' ');
+
+                deputy.FirstName = fullName[1];
+                deputy.LastName = fullName[0];
+                deputy.SecondName = fullName[2];
+
+                deputies.Add(deputy);
+            }
+
+            return deputies;
         }
     }
 }

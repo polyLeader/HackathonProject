@@ -47,8 +47,10 @@
   <ItemGroup>
     <Compile Include="Core\DatabaseContext.cs" />
     <Compile Include="Core\IProblemRepository.cs" />
+    <Compile Include="Core\ISocialRequestRepository.cs" />
     <Compile Include="Core\IUserRepository.cs" />
     <Compile Include="Core\ProblemRepository.cs" />
+    <Compile Include="Core\SocialRequestRepository.cs" />
     <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\Problem.cs" />
     <Compile Include="Domain\SocialRequest.cs" />

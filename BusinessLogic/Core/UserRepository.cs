@@ -42,7 +42,7 @@ namespace BusinessLogic.Core
         {
             try
             {
-                return this.dataBaseContext.Users.ToList().Single(it => it.FirstName == userName);
+                return this.dataBaseContext.Users.ToList().Single(it => it.Login == userName);
             }
             catch (Exception)
             {

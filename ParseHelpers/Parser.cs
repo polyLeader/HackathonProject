@@ -124,11 +124,5 @@ namespace ParseHelpers
 
             return deputies;
         }
-
-        public static string GenerateDeputyLogin(string firstName, string lastName)
-        {
-
-            return null;
-        }
     }
 }

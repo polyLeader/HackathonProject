@@ -23,17 +23,6 @@ namespace BusinessLogic.Core
             return street;
         }
 
-        public Street Update(Street street)
-        {
-            _databaseContext.Entry(street).State = EntityState.Modified;
-            return street;
-        }
-
-        public void Delete(Street stret)
-        {
-            _databaseContext.Entry(stret).State = EntityState.Deleted;
-        }
-
         public IList<Street> GetAll()
         {
             return _databaseContext.Streets.ToArray();

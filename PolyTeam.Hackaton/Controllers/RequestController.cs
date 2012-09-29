@@ -40,7 +40,7 @@ namespace PolyTeam.Hackaton.Controllers
             model.ProblemList = newList;
             return View("Index", model);
         }
-        public ActionResult Submit(SocialRequestModel request)
+        public void Submit(SocialRequestModel request)
         {
             var domain = new SocialRequest();
             domain.Problem = this.problemRepository.GetById(request.ProblemId);
@@ -49,7 +49,7 @@ namespace PolyTeam.Hackaton.Controllers
             //domain.User = request.User;
             domain.Street = request.Street;
             this.socialRequestRepository.Add(domain);
-            return View("Index");
+            
         }
     }
 }

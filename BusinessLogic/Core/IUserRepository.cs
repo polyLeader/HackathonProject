@@ -19,5 +19,7 @@ namespace BusinessLogic.Core
 
         void SetRoleToUser(User user);
 
+        string GetRoleOfUser(string roleName);
+
     }
 }

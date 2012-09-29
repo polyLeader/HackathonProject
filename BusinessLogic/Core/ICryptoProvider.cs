@@ -1,3 +1,4 @@
+﻿
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,12 @@ namespace BusinessLogic.Core
     {
         string EncryptString(string userPassword);
 
-        string CreateHash();
+        string CreateHash(string userPassword);
 
-        string ComparePassword(string userPassword, string enteredPassword);
+        bool ComparePassword(string userPassword, string enteredPassword);
 
         string GenerateCode(int length = 7);
+
+        string GenerateDeputyLogin(string firstName, string lastName);
     }
 }

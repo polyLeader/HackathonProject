@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,10 +15,12 @@ namespace PolyTeam.Hackaton.Controllers
     public class AccountController : Controller
     {
         private readonly IUserProcessor userProcessor;
+        private readonly ICryptoProvider cryptoProvider;
 
-        public AccountController(IUserProcessor userProcessor)
+        public AccountController(IUserProcessor userProcessor, ICryptoProvider cryptoProvider)
         {
             this.userProcessor = userProcessor;
+            this.cryptoProvider = cryptoProvider;
         }
         //
         // GET: /Account/LogOn
@@ -62,7 +64,7 @@ namespace PolyTeam.Hackaton.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Index");
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -84,8 +86,10 @@ namespace PolyTeam.Hackaton.Controllers
                 var user = new User
                 {
                     LastName = model.LastName,
-                    FirstName = model.UserName,
-                    Password = model.Password,
+                    FirstName = model.FirstName,
+                    SecondName = model.SecondName,
+                    Login = model.Login,
+                    Hash = cryptoProvider.EncryptString(model.Password),
                     RoleId = 2,
                     Street = model.UserStreet,
                     House = model.UserHouse,
@@ -95,9 +99,9 @@ namespace PolyTeam.Hackaton.Controllers
                 };
                 if (this.userProcessor.CreateUser(user))
                 {
-                    this.userProcessor.LogOn(model.UserName, model.Password);
-                    var CurUser = this.userProcessor.GetUserByName(model.UserName);
-                    return this.RedirectToAction("Index", "Index");
+                    this.userProcessor.LogOn(model.Login, model.Password);
+                    var CurUser = this.userProcessor.GetUserByName(model.Login);
+                    return this.RedirectToAction("Index", "Request");
                 }
             }
 

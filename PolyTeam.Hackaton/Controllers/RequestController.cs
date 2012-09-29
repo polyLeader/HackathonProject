@@ -29,7 +29,6 @@ namespace PolyTeam.Hackaton.Controllers
 
             return View(model);
         }
-
         public ActionResult Submit(SocialRequestModel request)
         {
             var domain = new SocialRequest();
@@ -39,6 +38,13 @@ namespace PolyTeam.Hackaton.Controllers
             //domain.User = request.User;
             domain.Street = request.Street;
             this.socialRequestRepository.Add(domain);
+            return View("Index");
+        }
+
+        public ActionResult ListOfProblem()
+        {
+            IList<ProblemModel> list = new List<ProblemModel>();
+
             return View("Index");
         }
     }

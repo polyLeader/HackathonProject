@@ -39,9 +39,9 @@ namespace BusinessLogic.Core
             return this._databaseContext.Problems.ToArray();
         }
 
-        public Problem GetById(int Id)
+        public Problem GetById(int id)
         {
-            return this._databaseContext.Problems.FirstOrDefault(x => x.Id == Id);
+            return this._databaseContext.Problems.FirstOrDefault(x => x.Id == id);
         }
     }
 }

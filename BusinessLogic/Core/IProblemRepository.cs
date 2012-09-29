@@ -12,6 +12,6 @@ namespace BusinessLogic.Core
         Problem Update(Problem problem);
         void Delete(Problem problem);
         IList<Problem> GetAll();
-        Problem GetById(int Id);
+        Problem GetById(int id);
     }
 }

@@ -11,19 +11,19 @@ namespace BusinessLogic.Core
     {
         protected override void Seed(DatabaseContext context)
         {
-            var problem = new Problem {Name = "Водопровод"};
+            var problem = new Problem {Name = "Водопровід"};
             context.Problems.Add(problem);
-            problem = new Problem { Name = "Газопровод" };
+            problem = new Problem { Name = "Газопровід" };
             context.Problems.Add(problem);
-            problem = new Problem { Name = "Канализация" };
+            problem = new Problem { Name = "Каналізація" };
             context.Problems.Add(problem);
-            problem = new Problem { Name = "Кровля" };
+            problem = new Problem { Name = "Покрівля" };
             context.Problems.Add(problem);
-            problem = new Problem { Name = "Електроснабжение" };
+            problem = new Problem { Name = "Електропостачання" };
             context.Problems.Add(problem);
-            problem = new Problem { Name = "Предаварийное состояние здания" };
+            problem = new Problem { Name = "Предаварійний стан будівлі" };
             context.Problems.Add(problem);
-            problem = new Problem { Name = "Лифт" };
+            problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
             base.Seed(context);
         }

@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace PolyTeam.HakProject.Models
+namespace PolyTeam.Hackaton.Models
 {
 
     public class LogOnModel

@@ -6,11 +6,11 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using BusinessLogic.Domain;
-using PolyTeam.HakProject.Models;
+using PolyTeam.Hackaton.Models;
 using BusinessLogic.Core;
 //using BusinessLogic.Domain;
 
-namespace PolyTeam.HakProject.Controllers
+namespace PolyTeam.Hackaton.Controllers
 {
     public class AccountController : Controller
     {

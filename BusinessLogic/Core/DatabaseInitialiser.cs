@@ -63,7 +63,7 @@ namespace BusinessLogic.Core
                 user.SecondName = deputy.SecondName;
                 user.Party = deputy.Party;
                 user.Password = _cryptoProvider.GenerateCode(8);
-                user.Login = Parser.GenerateDeputyLogin(deputy.FirstName, deputy.LastName);
+                user.Login = _cryptoProvider.GenerateDeputyLogin(deputy.FirstName, deputy.LastName);
 
                 context.Users.Add(user);
             }

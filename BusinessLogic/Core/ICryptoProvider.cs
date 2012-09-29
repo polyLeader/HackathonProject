@@ -1,3 +1,4 @@
+﻿
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace BusinessLogic.Core
         bool ComparePassword(string userPassword, string enteredPassword);
 
         string GenerateCode(int length = 7);
+
+        string GenerateDeputyLogin(string firstName, string lastName);
     }
 }

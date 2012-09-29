@@ -39,5 +39,12 @@ namespace PolyTeam.Hackaton.Controllers
             this.socialRequestRepository.Add(domain);
             return View("Index");
         }
+
+        public ActionResult ListOfProblem()
+        {
+            IList<ProblemModel> list = new List<ProblemModel>();
+
+            return View("Index");
+        }
     }
 }

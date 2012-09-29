@@ -1,34 +1,24 @@
-﻿
-<form id="panel" class="Form" action="" method="post">
-	
-    <div class="field">
-	<h3>   Подача заявки</h3>
-		<label>Адрес:</label>
-		<label id="remember">Свой адрес<input name="" type="checkbox" value=""/></label>
-        <label>Улица:</label>
-        <div class="input"><input type="text" name="" value="" id="street" /></div>
+﻿@model PolyTeam.Hackaton.Models.SocialRequestModel
+@using (Html.BeginForm("LogOn","Account")) {
+    <div id="panel">
+        <fieldset>
+            <legend>Інформація користувача</legend>
+
+            <div class="editor-label" class="field">
+                @Html.LabelFor(m => m.Street)
+                @Html.TextBoxFor(m => m.Street)
+            </div>
+            <div class="editor-field" class="field">
+                @Html.LabelFor(m => m.House)
+                @Html.TextBoxFor(m => m.House)
+            </div>
+            <div class="editor-field" class="field">
+                @Html.LabelFor(m => m.Flat)
+                @Html.TextBoxFor(m => m.Flat)
+            </div>
+            <div class='SubmitButton'>
+                <input type="submit" value="Додати" />
+            </div>
+        </fieldset>
     </div>
-	<div class="field">
-        <label>Дом:</label>
-        <div class="input"><input type="text" name="" value="" id="house" /></div>
-    </div>
-    <div class="field">
-        <label>Квартира:</label>
-        <div class="input"><input type="text" name="" value="" id="kv" /></div>
-    </div>
-	<div class="field">
-        <label>Телефон:</label>
-        <div class="input"><input type="text" name="" value="" id="phone" /></div>
-    </div>
-	<div class="field">
-        <label>Вид проблемы:</label>
-        <div class="input"><input type="text" name="" value="" id="problem" /></div>
-    </div>
-	<div class="field">
-        <label>Описание проблемы:</label>
-        <div class="input"><input type="text" cols="40" rows="3" name="" value="" id="problem" /></div>
-    </div>
-    <div class="submit">
-        <button type="submit">Загрузить</button>
-    </div>
-</form>
+}

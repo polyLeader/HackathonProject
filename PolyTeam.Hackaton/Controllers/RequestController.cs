@@ -25,7 +25,9 @@ namespace PolyTeam.Hackaton.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var model = new SocialRequestModel();
+
+            return View(model);
         }
 
         public ActionResult Submit(SocialRequestModel request)

@@ -40,6 +40,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,15 +48,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\CryptoProvider.cs" />
     <Compile Include="Core\DatabaseContext.cs" />
     <Compile Include="Core\DatabaseInitialiser.cs" />
+    <Compile Include="Core\ICryptoProvider.cs" />
     <Compile Include="Core\IProblemRepository.cs" />
     <Compile Include="Core\ISocialRequestRepository.cs" />
+    <Compile Include="Core\IUserProcessor.cs" />
     <Compile Include="Core\IUserRepository.cs" />
     <Compile Include="Core\ProblemRepository.cs" />
     <Compile Include="Core\SocialRequestRepository.cs" />
+    <Compile Include="Core\UserProcessor.cs" />
     <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\Problem.cs" />
+    <Compile Include="Domain\Roles.cs" />
     <Compile Include="Domain\SocialRequest.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

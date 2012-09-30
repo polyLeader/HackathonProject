@@ -9,5 +9,8 @@ var map = L.map('map', {
 
 L.tileLayer('http://{s}.tile.cloudmade.com/e37d73e201f94dd78191e2470055aec0/997/256/{z}/{x}/{y}.png', {
     attribution: 'Помощь жителям',
-    maxZoom: 18
 }).addTo(map);
+
+map.locate({ setView: true, maxZoom: 18 });
+
+map.setMaxBounds(donetskBounds);

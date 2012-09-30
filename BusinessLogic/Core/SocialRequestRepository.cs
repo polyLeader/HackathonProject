@@ -75,32 +75,32 @@ namespace BusinessLogic.Core
 
         public int CounterAllRequests()
         {
-            throw new NotImplementedException();
+            return this._databaseContext.SocialRequests.ToArray().Count();
         }
 
         public int CounterAllDoneRequests()
         {
-            throw new NotImplementedException();
+            return this._databaseContext.SocialRequests.Where(x => x.Done == true).ToArray().Count();
         }
 
         public int ConterAllInProcessRequests()
         {
-            throw new NotImplementedException();
+            return this._databaseContext.SocialRequests.Where(x => x.Done == false).ToArray().Count();
         }
 
         public int CounterAllNotInProcessRequests()
         {
-            throw new NotImplementedException();
+            return this._databaseContext.SocialRequests.Where(x => x.Done == null).ToArray().Count();
         }
 
         public int CounterAllDoneRequestsByParty(string party)
         {
-            throw new NotImplementedException();
+            return this._databaseContext.SocialRequests.Where(x => (x.Done == true && x.User.Party == party)).ToArray().Count();
         }
 
         public int CounterAllInprocessRequestsByParty(string party)
         {
-            throw new NotImplementedException();
+            return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray().Count();
         }
     }
 }

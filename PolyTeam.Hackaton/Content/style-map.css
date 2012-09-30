@@ -1,11 +1,25 @@
 #map 
 {
-    height: 600px;
+    height: 100%;
     width: 100%;
+    position:absolute;
+    left:0;
+    top:0;
 }
 
 #panel 
 {
-    
-    position: relative;
+        position: relative;
+        float:right;
+        z-index:2;
 }
+
+.leaflet-control
+{
+    margin-top:80px !important;
+    }
+    
+.navbar
+{
+    z-index:3;
+    }

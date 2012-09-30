@@ -69,16 +69,19 @@ $(document).ready(function () {
         }
         $(".drop_element:first-child").addClass('active');
     });
+    
     $(document).on('click', '.drop_element', function () {
         $("input#Street").val($(this).text());
         $("#drop_list").hide();
         $('input#House,input#Flat').removeAttr('disabled');
     });
+    
     $(document).on('blur', 'input#Street', function () {
         $(this).val($(".drop_element.active").text());
         $("#drop_list").hide();
         $('input#House,input#Flat').removeAttr('disabled');
     });
+    
     $(document).on('blur', 'input#House', function () {
         if ($('input#House').val().length != 0 && $('input#Street').val().length != 0)
             $.ajax({

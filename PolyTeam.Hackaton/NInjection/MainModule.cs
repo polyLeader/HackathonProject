@@ -20,6 +20,7 @@ namespace PolyTeam.Hackaton.NInjection
             this.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
             this.Bind<IProblemRepository>().To<ProblemRepository>().InRequestScope();
             this.Bind<ISocialRequestRepository>().To<SocialRequestRepository>().InRequestScope();
+            this.Bind<IStreetRepository>().To<StreetRepository>().InRequestScope();
         }
     }
 }

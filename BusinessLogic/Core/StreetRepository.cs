@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using BusinessLogic.Core;
 using BusinessLogic.Domain;
 
 namespace BusinessLogic.Core
 {
-    class StreetRepository : IStreetRepository
+    public class StreetRepository : IStreetRepository
     {
         private readonly DatabaseContext _databaseContext;
 

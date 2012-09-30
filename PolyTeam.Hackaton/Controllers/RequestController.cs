@@ -54,10 +54,19 @@ namespace PolyTeam.Hackaton.Controllers
                                  Flat = request.Flat,
                                  House = request.House,
                                  User = user,
-                                 Street = request.Street
+                                 Street = request.Street,
+                                 CreatingDate = DateTime.Now
                              };
             this.socialRequestRepository.Add(domain);
         }
 
+        [HttpPost]
+        public SocialRequest Submit(SocialRequest request)
+        {
+            var user = userProcessor.GetUserByName(User.Identity.Name);
+            request.User = user;
+            socialRequestRepository.Add(request);
+            return request;
+        }
     }
 }

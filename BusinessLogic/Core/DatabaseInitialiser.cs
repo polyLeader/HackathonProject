@@ -19,6 +19,15 @@ namespace BusinessLogic.Core
             _cryptoProvider = cryptoProvider;
         }
 
+        public DateTime RandomDay()
+        {
+            var start = new DateTime(2000, 1, 1);
+            var gen = new Random();
+
+            var range = ((TimeSpan)(DateTime.Today - start)).Days;
+            return start.AddDays(gen.Next(range));
+        }
+
         protected override void Seed(DatabaseContext context)
         {
             var problem = new Problem {Name = "Водопровід"};
@@ -118,13 +127,17 @@ namespace BusinessLogic.Core
                 social.Problem = new Problem {Id = tmp, Name = context.Problems.FirstOrDefault(x => x.Id == (tmp)).Name};
                 social.Deputy = new User();
 
+                social.CreatingDate = RandomDay();
+
+                social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 30));
+
                 social.User = context.Users.FirstOrDefault(x => x.Id == (random.Next(0, context.Users.Count())));
                 context.SocialRequests.Add(social);
             }
 
-             // Must be deleted - end
+             // TODO Must be deleted - end
 
-                context.SaveChanges();
+             context.SaveChanges();
 
             base.Seed(context);
         }

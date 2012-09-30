@@ -28,7 +28,8 @@ namespace BusinessLogic.Core
                 return false;
             }
 
-            var newUser = new User() {
+            var newUser = new User()
+            {
                 LastName = user.LastName,
                 SecondName = user.SecondName,
                 Login = user.Login,

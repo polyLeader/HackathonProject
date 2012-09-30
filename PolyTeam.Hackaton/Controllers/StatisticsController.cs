@@ -32,13 +32,22 @@ namespace PolyTeam.Hackaton.Controllers
 
         public void NotDone()
         {
-            IList < SocialRequestModel > social= new List<SocialRequestModel>();
             var list = socialRequestRepository.GetAllNotDone();
-            foreach (var socialRequestModel in list)
-            {
-                social.Add(new SocialRequestModel{Flat = socialRequestModel.Flat,House = socialRequestModel.House, Street = socialRequestModel.Street});
-            }
+            IList < SocialRequestModel > social= list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street}).ToList();
         }
+
+        public void Done()
+        {
+            var list = socialRequestRepository.GetAllDone();
+            //var deputy = 
+            IList<SocialRequestModel> social = list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street,
+                                                                                                         Deputy = new DeputyModel { Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName ,
+                                                                                                                                    LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
+                                                                                                                                    Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
+                                                                                                         }
+            }).ToList();
+        }
+
 
     }
 }

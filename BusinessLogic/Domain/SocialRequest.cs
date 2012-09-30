@@ -10,6 +10,7 @@ namespace BusinessLogic.Domain
     {
         public int Id { get; set; }
         public virtual User User { get; set; }
+        public virtual User Deputy { get; set; }
         public Problem Problem { get; set; }
         public string Street { get; set; }
         public string House { get; set; }

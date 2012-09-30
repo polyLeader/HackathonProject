@@ -10,36 +10,55 @@ $(document).ready(function () {
         }
     });
 
-    $('input#Street').on('change', function () {
-
-        var findCount = 0;
-
+    $('input#Street').on('input', function () {
         var findArray = new Object();
+        var findCount = 0;
+        var i;
 
         if ($(this).attr('value').length >= 2) {
-            for (var i = 0; i < resource.length; i++) {
-                if (resource[i].Name.indexOf($(this).attr('value')) != -1) {
-                    findArray[findCount] = resource[i].Name;
+            for (i = 0; i < resource.length; i++) {
+                if (resource[i].Name.toLowerCase().indexOf($(this).attr('value')) != -1 && resource[i].Lang == "uk") {
+                    findArray["" + findCount] = resource[i].Name;
                     findCount++;
                 }
             }
+
+            if (!findCount) {
+                for (i = 0; i < resource.length; i++) {
+                    if (resource[i].Name.toLowerCase().indexOf($(this).attr('value')) != -1 && resource[i].Lang == "ru") {
+                        findArray["" + findCount] = resource[i].Name;
+                        findCount++;
+                    }
+                }
+
+                if (!findCount) {
+                    for (i = 0; i < resource.length; i++) {
+                        if (resource[i].Name.toLowerCase().indexOf($(this).attr('value')) != -1 && resource[i].Lang == "en") {
+                            findArray["" + findCount] = resource[i].Name;
+                            findCount++;
+                        }
+                    }
+                }
+                
+            }
+        } else {
+            $('#drop_list').html("");
+            return;
         }
 
         if (findCount) {
             var dropList = $('#drop_list');
             var selected = dropList.attr('class');
 
-            $('#drop_element').remove();
+            dropList.html("");
 
             if (selected == null) {
                 dropList.attr('class', "0");
                 selected = 0;
             }
 
-            for (var j = selected; j < selected + 4; j++) {
-                dropList.append('<div id="drop_element">');
-                dropList.append(resource[j].Name);
-                dropList.append('</div>');
+            for (var j = selected; j < selected + 4 && selected + 4 < findCount; j++) {
+                dropList.append('<div id="drop_element">' + findArray[j] + '</div>');
             }
         }
     });

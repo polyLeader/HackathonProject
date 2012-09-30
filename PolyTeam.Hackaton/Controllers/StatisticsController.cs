@@ -63,5 +63,39 @@ namespace PolyTeam.Hackaton.Controllers
             
             return Json(problemsList);
         }
+
+        public void InProcessByParty(string party)
+        {
+            var list = socialRequestRepository.GetAllInProcessByParty(party);
+            IList<SocialRequestModel> social = list.Select(socialRequestModel => new SocialRequestModel
+            {
+                Flat = socialRequestModel.Flat,
+                House = socialRequestModel.House,
+                Street = socialRequestModel.Street,
+                Deputy = new DeputyModel
+                {
+                    Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
+                    LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
+                    Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
+                }
+            }).ToList();
+        }
+
+        public void DoneByParty(string party)
+        {
+            var list = socialRequestRepository.GetAllDoneByParty(party);
+            IList<SocialRequestModel> social = list.Select(socialRequestModel => new SocialRequestModel
+            {
+                Flat = socialRequestModel.Flat,
+                House = socialRequestModel.House,
+                Street = socialRequestModel.Street,
+                Deputy = new DeputyModel
+                {
+                    Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
+                    LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
+                    Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
+                }
+            }).ToList();
+        }
     }
 }

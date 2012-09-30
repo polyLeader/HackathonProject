@@ -15,6 +15,6 @@ namespace BusinessLogic.Domain
         public string Street { get; set; }
         public string House { get; set; }
         public int? Flat { get; set; }
-        public bool Done { get; set; }
+        public bool? Done { get; set; }
     }
 }

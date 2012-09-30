@@ -11,6 +11,12 @@ namespace PolyTeam.Hackaton.Controllers
 {
     public class StatisticsController : Controller
     {
+        public struct AllProblemsCount
+        {
+            public string Name;
+            public int Count;
+        }
+
         //
         // GET: /Statistics/
         private readonly IProblemRepository problemRepository;
@@ -48,6 +54,16 @@ namespace PolyTeam.Hackaton.Controllers
             }).ToList();
         }
 
+        public JsonResult AllProblemsStat()
+        {
+            var problemRepo = problemRepository.GetAll();
+            var socialRepo = socialRequestRepository.GetAll();
+
+            var problemsList = (from problem in problemRepo let counter = socialRepo.Count(socialRequest => problem.Id == socialRequest.Problem.Id) select new AllProblemsCount {Name = problem.Name, Count = counter}).ToList();
+            
+            return Json(problemsList);
+        }
+
         public void InProcessByParty(string party)
         {
             var list = socialRequestRepository.GetAllInProcessByParty(party);
@@ -81,7 +97,5 @@ namespace PolyTeam.Hackaton.Controllers
                 }
             }).ToList();
         }
-
-
     }
 }

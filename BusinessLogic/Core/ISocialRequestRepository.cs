@@ -19,5 +19,11 @@ namespace BusinessLogic.Core
         IList<SocialRequest> GetAllDone();
         IList<SocialRequest> GetAllDoneByParty(string party);
         IList<SocialRequest> GetAllInProcessByParty(string party);
+        int CounterAllRequests();
+        int CounterAllDoneRequests();
+        int ConterAllInProcessRequests();
+        int CounterAllNotInProcessRequests();
+        int CounterAllDoneRequestsByParty(string party);
+        int CounterAllInprocessRequestsByParty(string party);
     }
 }

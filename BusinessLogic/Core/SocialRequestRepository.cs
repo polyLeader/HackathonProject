@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -71,6 +71,36 @@ namespace BusinessLogic.Core
         public IList<SocialRequest> GetAllInProcessByParty(string party)
         {
             return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray();
+        }
+
+        public int CounterAllRequests()
+        {
+            return this._databaseContext.SocialRequests.ToArray().Count();
+        }
+
+        public int CounterAllDoneRequests()
+        {
+            return this._databaseContext.SocialRequests.Where(x => x.Done == true).ToArray().Count();
+        }
+
+        public int ConterAllInProcessRequests()
+        {
+            return this._databaseContext.SocialRequests.Where(x => x.Done == false).ToArray().Count();
+        }
+
+        public int CounterAllNotInProcessRequests()
+        {
+            return this._databaseContext.SocialRequests.Where(x => x.Done == null).ToArray().Count();
+        }
+
+        public int CounterAllDoneRequestsByParty(string party)
+        {
+            return this._databaseContext.SocialRequests.Where(x => (x.Done == true && x.User.Party == party)).ToArray().Count();
+        }
+
+        public int CounterAllInprocessRequestsByParty(string party)
+        {
+            return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray().Count();
         }
     }
 }

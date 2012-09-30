@@ -12,32 +12,32 @@ namespace BusinessLogic.Core
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DatabaseContext dataBaseContext;
+        private readonly DatabaseContext _databaseContext;
         //private readonly IUserRepository userRepository;
 
         public UserRepository(DatabaseContext dataBaseContext)
         {
-            this.dataBaseContext = dataBaseContext;
+            this._databaseContext = dataBaseContext;
             // this.userRepository = userRepository;
         }
 
         public void CreateUser(User user)
         {
-            this.dataBaseContext.Entry(user).State = EntityState.Added;
-            this.dataBaseContext.SaveChanges();
+            this._databaseContext.Entry(user).State = EntityState.Added;
+            this._databaseContext.SaveChanges();
         }
 
         public void UpdateUser(User user)
         {
-            this.dataBaseContext.Entry(user).State = EntityState.Modified;
-            this.dataBaseContext.SaveChanges();
+            this._databaseContext.Entry(user).State = EntityState.Modified;
+            this._databaseContext.SaveChanges();
         }
 
         public void DeleteUser(int userId)
         {
-            User user = this.dataBaseContext.Users.Single(x => x.Id == userId);
-            this.dataBaseContext.Users.Remove(user);
-            this.dataBaseContext.SaveChanges();
+            User user = this._databaseContext.Users.Single(x => x.Id == userId);
+            this._databaseContext.Users.Remove(user);
+            this._databaseContext.SaveChanges();
 
 
         }
@@ -46,7 +46,7 @@ namespace BusinessLogic.Core
         {
             try
             {
-                return this.dataBaseContext.Users.ToList().Single(it => it.Login == userName);
+                return this._databaseContext.Users.ToList().Single(it => it.Login == userName);
             }
             catch (Exception)
             {
@@ -57,12 +57,24 @@ namespace BusinessLogic.Core
 
         public string GetRole(string userName)
         {
-            return this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(userName).RoleId).Select(x => x.Name).First();
+            return this._databaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(userName).RoleId).Select(x => x.Name).First();
         }
 
         public bool IsDeputy(string userName)
         {
             return System.Web.Security.Roles.IsUserInRole(userName, "Deputy");
         }
+
+        public User GetById(int id)
+        {
+            return _databaseContext.Users.FirstOrDefault(x => x.Id == id);
+        }
+
+        public int GetCount()
+        {
+            return _databaseContext.Users.Count();
+        }
     }
+
+     
 }

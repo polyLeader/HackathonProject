@@ -7,10 +7,7 @@
 
 <h2>Create a New Account</h2>
 <p>
-    Use the form below to create a new account. 
-</p>
-<p>
-    Passwords are required to be a minimum of @Membership.MinRequiredPasswordLength characters in length.
+    Заповніть інформацію для реєстрації. 
 </p>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
@@ -93,14 +90,6 @@
               <div class="editor-field">
                   @Html.TextBoxFor(m => m.UserFlat)
                   @Html.ValidationMessageFor(m => m.UserFlat)
-              </div>
-            
-            <div class="editor-label">
-                @Html.LabelFor(m => m.UserParty)
-            </div>
-              <div class="editor-field">
-                  @Html.TextBoxFor(m => m.UserParty)
-                  @Html.ValidationMessageFor(m => m.UserParty)
               </div>
             
             <div class="editor-label">

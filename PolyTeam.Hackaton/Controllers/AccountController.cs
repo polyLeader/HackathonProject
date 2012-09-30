@@ -49,7 +49,7 @@ namespace PolyTeam.Hackaton.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ModelState.AddModelError("", "Ім`я користувача чи пароль є невірними.");
                 }
 
             // If we got this far, something failed, redisplay form
@@ -93,7 +93,7 @@ namespace PolyTeam.Hackaton.Controllers
                     Street = model.UserStreet,
                     House = model.UserHouse,
                     Flat = Convert.ToInt32(model.UserFlat),
-                    Party = model.UserParty,
+                    Party = null,
                     PhoneNumber = model.UserPhoneNumber
                 };
                 if (this.userProcessor.CreateUser(user))
@@ -104,7 +104,7 @@ namespace PolyTeam.Hackaton.Controllers
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Wrong registration data");
+            ModelState.AddModelError(string.Empty, "Невірні реєстраціїні дані");
             return this.View(model);
         }
 

@@ -38,7 +38,7 @@ namespace BusinessLogic.Core
                 Street = user.Street,
                 House = user.House,
                 Flat = user.Flat,
-                Party = user.Party,
+                Party = null,
                 PhoneNumber = user.PhoneNumber
             };
 

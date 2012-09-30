@@ -65,10 +65,6 @@ namespace PolyTeam.Hackaton.Models
         public string UserFlat { get; set; }
 
         [Required]
-        [Display(Name = "Партія")]
-        public string UserParty { get; set; }
-
-        [Required]
         [Display(Name = "Телефон")]
         public string UserPhoneNumber { get; set; }
     }

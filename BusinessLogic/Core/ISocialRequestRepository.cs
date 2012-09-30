@@ -16,5 +16,6 @@ namespace BusinessLogic.Core
         IList<SocialRequest> GetByUser(User user);
         IList<SocialRequest> GetByProblem(Problem problem);
         IList<SocialRequest> GetAllNotDone();
+        IList<SocialRequest> GetAllDone();
     }
 }

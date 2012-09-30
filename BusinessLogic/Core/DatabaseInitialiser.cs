@@ -11,7 +11,7 @@ using ParseHelpers;
 
 namespace BusinessLogic.Core
 {
-    public class DatabaseInitialiser:DropCreateDatabaseIfModelChanges<DatabaseContext>
+    public class DatabaseInitialiser:DropCreateDatabaseAlways<DatabaseContext>
     {
         private readonly ICryptoProvider _cryptoProvider;
         public DatabaseInitialiser(ICryptoProvider cryptoProvider)
@@ -119,7 +119,7 @@ namespace BusinessLogic.Core
                 var social = new SocialRequest();
 
                 if (i % 3 == 0) social.Done = true;
-                else if (i % 3 == 0) social.Done = false;
+                else if (i % 2 == 0) social.Done = false;
                 else social.Done = null;
 
                 social.House = random.Next(0, 60).ToString();

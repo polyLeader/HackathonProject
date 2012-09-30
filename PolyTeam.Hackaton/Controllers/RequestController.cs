@@ -48,12 +48,14 @@ namespace PolyTeam.Hackaton.Controllers
         public void Submit(SocialRequestModel request)
         {
             var user = userProcessor.GetUserByName(User.Identity.Name);
-            var domain = new SocialRequest();
-            domain.Problem = this.problemRepository.GetById(request.ProblemId);
-            domain.Flat = request.Flat;
-            domain.House = request.House;
-            domain.User = user;
-            domain.Street = request.Street;
+            var domain = new SocialRequest
+                             {
+                                 Problem = this.problemRepository.GetById(request.ProblemId),
+                                 Flat = request.Flat,
+                                 House = request.House,
+                                 User = user,
+                                 Street = request.Street
+                             };
             this.socialRequestRepository.Add(domain);
         }
 

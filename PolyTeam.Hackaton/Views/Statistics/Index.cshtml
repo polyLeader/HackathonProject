@@ -1,9 +1,36 @@
 ﻿<link href="@Url.Content("~/Content/style-stat.css")" rel="stylesheet" type="text/css" /> 
-@using (Html.BeginForm("LogOn", "Account"))
-{
-<div id="panel">
-	<h3>Статистика</h3>
-	<p>1. Заявок получено...</p>
-	<p>2. Заявок обработано...</p>
+<script src="@Url.Content("~/Scripts/RGraph.common.core.js")"></script>
+<script src="@Url.Content("~/Scripts/RGraph.common.dynamic.js")"></script>
+<script src="@Url.Content("~/Scripts/RGraph.common.effects.js")"></script>
+<script src="@Url.Content("~/Scripts/RGraph.line.js")"></script>
+<div id="taken_time_graph">
+	<canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
 </div>
-}    
+<div id="panel">
+    <h3>Статистика</h3>
+    <p>1. Заявок получено...</p>
+    <p>2. Заявок обработано...</p>
+</div>
+<script>
+    var line = new RGraph.Line('cvs', [84, -5, -30, -26, -45, 12, 84, 73, 60, 11, 56, 32]);
+    line.Set('chart.labels', ['Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер', 'Лип', 'Сер', 'Вер', 'Жов', 'Лис', 'Гру']);
+    line.Set('chart.colors', ['black']);
+    line.Set('chart.shadow', true);
+    line.Set('chart.shadow.offsetx', 1);
+    line.Set('chart.shadow.offsety', 1);
+    line.Set('chart.linewidth', 2);
+    line.Set('chart.yaxispos', 'right');
+    line.Set('chart.xaxispos', 'center');
+    line.Set('chart.hmargin', 5);
+    RGraph.Effects.Line.jQuery.Trace(line);
+    var line = new RGraph.Line('cvs', [84, 73, 60, 11, 56, 32,84, -5, -30, -26, -45, 12]);
+    line.Set('chart.colors', ['red']);
+    line.Set('chart.shadow', true);
+    line.Set('chart.shadow.offsetx', 1);
+    line.Set('chart.shadow.offsety', 1);
+    line.Set('chart.linewidth', 2);
+    line.Set('chart.yaxispos', 'right');
+    line.Set('chart.xaxispos', 'center');
+    line.Set('chart.hmargin', 5);
+    RGraph.Effects.Line.jQuery.Trace(line);
+</script>

@@ -54,5 +54,4 @@ namespace PolyTeam.Hackaton.Controllers
         }
 
     }
->>>>>>> 2d9aa3813ab149d141e42aa5a027e954cdc438a8
 }

@@ -99,10 +99,11 @@ namespace PolyTeam.Hackaton.Controllers
 
             return Json(osmObject);
         }
+
         [HttpGet]
         public JsonResult GetAllStreets()
         {
-            return Json(streetRepository.GetAll(),JsonRequestBehavior.AllowGet);
+            return Json(streetRepository.GetAll(), JsonRequestBehavior.AllowGet);
         }
     }
 }

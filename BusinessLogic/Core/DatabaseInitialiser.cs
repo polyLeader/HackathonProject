@@ -36,15 +36,11 @@ namespace BusinessLogic.Core
             problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
 
-            var street = new Street();
-
             var streets = Parser.GetStreets("donetsk.osm");
 
-            foreach (var street1 in streets)
+            foreach (var street in streets)
             {
-                street.Lang = street1.Lang;
-                street.Name = street1.Name;
-                context.Streets.Add(street);
+                context.Streets.Add(new Street{Lang = street.Lang, Name = street.Name});
             }
 
             var user = new User();

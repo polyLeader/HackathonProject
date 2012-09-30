@@ -24,9 +24,9 @@ namespace BusinessLogic.Core
             return street;
         }
 
-        public IList<Street> GetAll()
+        public IEnumerable<Street> GetAll()
         {
-            return _databaseContext.Streets.ToArray();
+            return _databaseContext.Streets;
         }
 
         public Street GetById(int id)

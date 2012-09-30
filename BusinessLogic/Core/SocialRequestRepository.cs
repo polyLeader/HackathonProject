@@ -72,5 +72,35 @@ namespace BusinessLogic.Core
         {
             return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray();
         }
+
+        public int CounterAllRequests()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CounterAllDoneRequests()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ConterAllInProcessRequests()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CounterAllNotInProcessRequests()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CounterAllDoneRequestsByParty(string party)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CounterAllInprocessRequestsByParty(string party)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

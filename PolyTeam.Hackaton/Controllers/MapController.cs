@@ -3,6 +3,8 @@ using System.Globalization;
 using System.Net;
 using System.Web.Mvc;
 using System.Xml;
+using BusinessLogic.Core;
+using BusinessLogic.Domain;
 
 namespace PolyTeam.Hackaton.Controllers
 {
@@ -21,8 +23,14 @@ namespace PolyTeam.Hackaton.Controllers
 
         }
 
+        private readonly IStreetRepository streetRepository;
         //
         // GET: /Map/
+
+        public MapController(IStreetRepository streetRepository)
+        {
+            this.streetRepository = streetRepository;
+        }
 
         public JsonResult GetCoordinates(string street, string number)
         {
@@ -90,6 +98,12 @@ namespace PolyTeam.Hackaton.Controllers
             };
 
             return Json(osmObject);
+        }
+
+        [HttpGet]
+        public JsonResult GetAllStreets()
+        {
+            return Json(streetRepository.GetAll(), JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -9,7 +9,6 @@ namespace PolyTeam.Hackaton.Models
 {
     public class SocialRequestModel
     {
-        public UserModel User { get; set; }
         public IList<SelectListItem> ProblemList { get; set; }
         public int ProblemId { get; set; }
         public string Street { get; set; }

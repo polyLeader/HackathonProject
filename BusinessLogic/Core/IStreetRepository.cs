@@ -6,7 +6,7 @@ namespace BusinessLogic.Core
     public interface IStreetRepository
     {
         Street Add(Street street);
-        IList<Street> GetAll();
+        IEnumerable<Street> GetAll();
         Street GetById(int id);
     }
 }

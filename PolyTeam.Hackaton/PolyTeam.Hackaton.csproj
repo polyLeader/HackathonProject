@@ -104,6 +104,7 @@
     <Content Include="Content\style-stat.css" />
     <Content Include="Content\style.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\autocompletion.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
@@ -185,7 +186,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3735</DevelopmentServerPort>
+          <DevelopmentServerPort>49205</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

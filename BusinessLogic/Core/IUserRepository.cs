@@ -18,5 +18,7 @@ namespace BusinessLogic.Core
         User GetByName(string userName);
 
         bool IsDeputy(string roleName);
+
+        string GetRole(string userName);
     }
 }

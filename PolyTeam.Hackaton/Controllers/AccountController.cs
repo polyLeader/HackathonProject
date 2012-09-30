@@ -8,7 +8,6 @@ using System.Web.Security;
 using BusinessLogic.Domain;
 using PolyTeam.Hackaton.Models;
 using BusinessLogic.Core;
-//using BusinessLogic.Domain;
 
 namespace PolyTeam.Hackaton.Controllers
 {

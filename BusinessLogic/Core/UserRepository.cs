@@ -55,6 +55,11 @@ namespace BusinessLogic.Core
             }
         }
 
+        public string GetRole(string userName)
+        {
+            return this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(userName).RoleId).Select(x => x.Name).First();
+        }
+
         public bool IsDeputy(string userName)
         {
             return System.Web.Security.Roles.IsUserInRole(userName, "Deputy");

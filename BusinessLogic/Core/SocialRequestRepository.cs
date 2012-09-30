@@ -52,5 +52,10 @@ namespace BusinessLogic.Core
         {
             return this._databaseContext.SocialRequests.Where(x => x.Problem == problem).ToArray();
         }
+
+        public IList<SocialRequest> GetAllNotDone()
+        {
+            return this._databaseContext.SocialRequests.Where(x => x.Done == false).ToArray();
+        }
     }
 }

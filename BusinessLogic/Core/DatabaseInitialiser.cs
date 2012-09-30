@@ -78,9 +78,9 @@ namespace BusinessLogic.Core
                                 LastName = "Beseda",
                                 Login = "Dimka",
                                 RoleId = 1,
-                                SecondName = "Genadievich",
+                                SecondName = "Gennadievich",
                                 Party = "Партия регионов",
-                                Hash = _cryptoProvider.EncryptString("12345678"),
+                                Hash = _cryptoProvider.CreateHash("12345678"),
                             };
 
             context.Users.Add(deput);

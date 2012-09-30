@@ -14,9 +14,5 @@ namespace BusinessLogic.Core
         bool LogOn(string userName, string userPassword);
 
         User GetUserByName(string userName);
-
-        bool CreateRole(string roleName);
-
-        bool SetRoleToUser(string userName, string roleName);
     }
 }

@@ -10,6 +10,7 @@ using BusinessLogic.Domain;
 
 namespace PolyTeam.Hackaton.Controllers
 {
+    //[Authorize(Roles = "Deputy")]
     public class RequestController : Controller
     {
 
@@ -51,8 +52,8 @@ namespace PolyTeam.Hackaton.Controllers
             domain.Problem = this.problemRepository.GetById(request.ProblemId);
             domain.Flat = request.Flat;
             domain.House = request.House;
-            domain.Street = request.Street;
             domain.User = user;
+            domain.Street = request.Street;
             this.socialRequestRepository.Add(domain);
         }
 

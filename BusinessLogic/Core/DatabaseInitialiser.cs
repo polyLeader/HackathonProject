@@ -100,7 +100,7 @@ namespace BusinessLogic.Core
 
             for (var i = 0; i < 100; i++ )
             {
-                int rand = random.Next(0, context.Streets.Count());
+                var rand = random.Next(0, context.Streets.Count());
                 user.Street = context.Streets.FirstOrDefault(x => x.Id == rand).Name;
                 user.House = null;
                 user.Flat = null;

@@ -19,6 +19,15 @@ namespace BusinessLogic.Core
             _cryptoProvider = cryptoProvider;
         }
 
+        public DateTime RandomDay()
+        {
+            var start = new DateTime(2000, 1, 1);
+            var gen = new Random();
+
+            var range = ((TimeSpan)(DateTime.Today - start)).Days;
+            return start.AddDays(gen.Next(range));
+        }
+
         protected override void Seed(DatabaseContext context)
         {
             var problem = new Problem {Name = "Водопровід"};
@@ -85,7 +94,53 @@ namespace BusinessLogic.Core
 
             context.Users.Add(deput);
 
-            context.SaveChanges();
+
+            // TODO Must be deleted
+            var random = new Random();
+
+            for (var i = 0; i < 100; i++ )
+            {
+                int rand = random.Next(0, context.Streets.Count());
+                user.Street = context.Streets.FirstOrDefault(x => x.Id == rand).Name;
+                user.House = null;
+                user.Flat = null;
+                user.FirstName = _cryptoProvider.GenerateCode(10);
+                user.LastName = _cryptoProvider.GenerateCode(8);
+                user.SecondName = _cryptoProvider.GenerateCode(9);
+                user.Party = null;
+                user.RoleId = 2;
+                user.Hash = _cryptoProvider.EncryptString(_cryptoProvider.GenerateCode(8));
+                user.Login = _cryptoProvider.GenerateCode(6);
+                context.Users.Add(user);
+            }
+
+            for (var i = 0; i < 200; i++)
+            {
+                var social = new SocialRequest();
+
+                if (i % 3 == 0) social.Done = true;
+                else if (i % 3 == 0) social.Done = false;
+                else social.Done = null;
+
+                social.House = random.Next(0, 60).ToString();
+                int rand = random.Next(0, context.Streets.Count());
+                social.Street = context.Streets.FirstOrDefault(x => x.Id == rand).Name;
+                var tmp = random.Next(0, 7);
+                social.Problem = new Problem {Id = tmp, Name = context.Problems.FirstOrDefault(x => x.Id == (tmp)).Name};
+                social.Deputy = new User();
+
+                social.CreatingDate = RandomDay();
+
+                social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 30));
+
+                int randomStreetId = random.Next(0, context.Streets.Count());
+                social.User = context.Users.FirstOrDefault(x => x.Id == randomStreetId);
+                context.SocialRequests.Add(social);
+            }
+
+             // TODO Must be deleted - end
+
+             context.SaveChanges();
 
             base.Seed(context);
         }

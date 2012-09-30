@@ -67,7 +67,7 @@ namespace PolyTeam.Hackaton.Controllers
             var social = new SocialRequest()
             {
                 Deputy = deputy,
-                Problem = problem,
+                Problem = problem
             };
 
         }

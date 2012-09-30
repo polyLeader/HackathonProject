@@ -20,5 +20,9 @@ namespace BusinessLogic.Core
         bool IsDeputy(string roleName);
 
         string GetRole(string userName);
+
+        User GetById(int id);
+
+        int GetCount();
     }
 }

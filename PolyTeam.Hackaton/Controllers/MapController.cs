@@ -67,6 +67,7 @@ namespace PolyTeam.Hackaton.Controllers
             return Json(coord, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public JsonResult GetObject(float lat, float lon)
         {
             var reguestGET =
@@ -97,7 +98,7 @@ namespace PolyTeam.Hackaton.Controllers
                 HouseNumber = tagHouseNumber == null ? null : tagHouseNumber.InnerText
             };
 
-            return Json(osmObject);
+            return Json(osmObject, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

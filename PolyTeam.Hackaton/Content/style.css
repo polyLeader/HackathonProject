@@ -3,7 +3,7 @@ min-width: 1000px;
 background:#F3F3F3 !important;
 }
 
-.SubmitButton input, .RegisterButton button{
+.SubmitButton button, .RegisterButton button{
     padding: 6px 20px;
     height: 30px;
     border: 1px solid #a3a5a6;
@@ -24,6 +24,7 @@ background:#F3F3F3 !important;
 }
 .RegisterButton button {
     float: left;
+    margin-left:30px;
 }
 .Form {
 	float: right;

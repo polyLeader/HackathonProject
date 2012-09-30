@@ -6,8 +6,6 @@ using System.Data;
 using System.Web.Security;
 using BusinessLogic.Domain;
 
-using BusinessLogic.Domain;
-
 namespace BusinessLogic.Core
 {
     public class UserRepository : IUserRepository

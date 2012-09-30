@@ -57,5 +57,20 @@ namespace PolyTeam.Hackaton.Controllers
             this.socialRequestRepository.Add(domain);
         }
 
+        [Authorize(Roles = "Deputy")]
+        public void SetDeputyToProblem(string someProblem)
+        {
+            var deputy = new User();
+            deputy = userProcessor.GetUserByName(User.Identity.Name);
+            var problem = new Problem();
+            problem = problemRepository.GetProblemByName(someProblem);
+            var social = new SocialRequest()
+            {
+                Deputy = deputy,
+                Problem = problem,
+            };
+
+        }
+
     }
 }

@@ -43,5 +43,11 @@ namespace BusinessLogic.Core
         {
             return this._databaseContext.Problems.FirstOrDefault(x => x.Id == id);
         }
+
+        public Problem GetProblemByName(string someProblem)
+        {
+
+            return this._databaseContext.Problems.ToList().Single(it => it.Name == someProblem);
+        }
     }
 }

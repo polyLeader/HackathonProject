@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using BusinessLogic.Domain;
+﻿using System.Web.Mvc;
+﻿using BusinessLogic.Domain;
+using BusinessLogic.Core;
+using System.Web;
 
 namespace BusinessLogic.Core
 {
     public class SocialRequestRepository:ISocialRequestRepository
     {
         private readonly DatabaseContext _databaseContext;
+        private readonly IUserProcessor userProcessor;
+       //rivate readonly IProblemRepository problemRepository;
 
-        public SocialRequestRepository(DatabaseContext databaseContext)
+        public SocialRequestRepository(DatabaseContext databaseContext, IUserProcessor userProcessor)
         {
             this._databaseContext = databaseContext;
+            this.userProcessor = userProcessor;
+            //this.problemRepository = problemRepository;
         }
 
         public SocialRequest Add(SocialRequest socialRequest)
@@ -101,6 +108,7 @@ namespace BusinessLogic.Core
         public int CounterAllInprocessRequestsByParty(string party)
         {
             return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray().Count();
-        }
+        } 
+
     }
 }

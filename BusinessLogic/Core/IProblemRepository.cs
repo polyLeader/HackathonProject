@@ -13,5 +13,6 @@ namespace BusinessLogic.Core
         void Delete(Problem problem);
         IList<Problem> GetAll();
         Problem GetById(int id);
+        Problem GetProblemByName(string someProblem);
     }
 }

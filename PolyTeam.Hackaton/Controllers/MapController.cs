@@ -31,7 +31,7 @@ namespace PolyTeam.Hackaton.Controllers
         {
             this.streetRepository = streetRepository;
         }
-
+        [HttpGet]
         public JsonResult GetCoordinates(string street, string number)
         {
             var reguestGET =
@@ -56,7 +56,7 @@ namespace PolyTeam.Hackaton.Controllers
 
             if (tagPlace == null)
             {
-                return Json(null);
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
             
             var lat = Convert.ToSingle(tagPlace.GetAttribute("lat"), new CultureInfo("en-US"));
@@ -64,7 +64,7 @@ namespace PolyTeam.Hackaton.Controllers
 
             var coord = new Coordinates { Lat = lat, Lon = lon };
 
-            return Json(coord);
+            return Json(coord, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetObject(float lat, float lon)

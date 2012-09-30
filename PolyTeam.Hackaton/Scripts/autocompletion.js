@@ -10,6 +10,7 @@ $(document).ready(function () {
         }
     });
 
+    $("input#Flat,input#House").prop("disabled", "true");
     $('input#Street').on('input', function () {
         var findArray = new Object();
         var findCount = 0;
@@ -39,10 +40,13 @@ $(document).ready(function () {
                         }
                     }
                 }
-                
+
                 $('#drop_list').html("");
             }
         } else {
+            if ($(this).attr('value').length == 0) {
+                $("input#Flat,input#House").prop("disabled", "true");
+            }
             $('#drop_list').html("");
             return;
         }
@@ -50,6 +54,7 @@ $(document).ready(function () {
         if (findCount) {
             var dropList = $('#drop_list');
             var selected = dropList.attr('class');
+            $("#drop_list").show();
 
             dropList.html("");
 
@@ -59,8 +64,34 @@ $(document).ready(function () {
             }
 
             for (var j = selected; j < selected + 4 && j < findCount; j++) {
-                dropList.append('<div id="drop_element">' + findArray[j] + '</div>');
+                dropList.append('<div class="drop_element">' + findArray[j] + '</div>');
             }
         }
+        $(".drop_element:first-child").addClass('active');
+    });
+    $(document).on('click', '.drop_element', function () {
+        $("input#Street").val($(this).text());
+        $("#drop_list").hide();
+        $('input#House,input#Flat').removeAttr('disabled');
+    });
+    $(document).on('blur', 'input#Street', function () {
+        $(this).val($(".drop_element.active").text());
+        $("#drop_list").hide();
+        $('input#House,input#Flat').removeAttr('disabled');
+    });
+    $(document).on('blur', 'input#House', function () {
+        if ($('input#House').val().length != 0 && $('input#Street').val().length != 0)
+            $.ajax({
+                'dataType': 'JSON',
+                'type': 'GET',
+                'data': { 'street': $('input#Street').val(), 'number': $('input#House').val() },
+                'url': '/Map/GetCoordinates',
+                'success': function (respon) {
+                    if (respon != null) {
+                        var marker = L.marker([respon.Lat, respon.Lon]).addTo(map);
+                        map.setView(new L.LatLng(respon.Lat, respon.Lon), 18);
+                    }
+                }
+            });
     });
 });

@@ -34,3 +34,28 @@ form
 {
     margin:0 !important;
     }
+input#House, input#Flat {
+    disabled: true;
+}
+#drop_list{
+    background: white;
+    width: 200px;
+    overflow: auto;
+    margin-left: 20px;
+}
+
+#Street {
+    margin: 0px;
+}
+.drop_element {
+    cursor: pointer;
+    color: black;
+}
+.drop_element:hover {
+    background: #63AFD0;
+}
+.drop_element.active
+{
+    background: #1729B0;
+    color: white;
+}

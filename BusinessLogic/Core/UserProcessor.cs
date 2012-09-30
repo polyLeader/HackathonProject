@@ -75,15 +75,5 @@ namespace BusinessLogic.Core
                 return null;
             }
         }
-
-        public bool CreateRole(string roleName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SetRoleToUser(string userName, string roleName)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

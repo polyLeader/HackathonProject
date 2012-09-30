@@ -55,12 +55,22 @@ namespace BusinessLogic.Core
 
         public IList<SocialRequest> GetAllNotDone()
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Done == false).ToArray();
+            return this._databaseContext.SocialRequests.Where(x => x.Done == null).ToArray();
         }
 
         public IList<SocialRequest> GetAllDone()
         {
             return this._databaseContext.SocialRequests.Where(x => x.Done == true).ToArray();
+        }
+
+        public IList<SocialRequest> GetAllDoneByParty(string party)
+        {
+            return this._databaseContext.SocialRequests.Where(x => (x.Done == true && x.User.Party == party)).ToArray();
+        }
+
+        public IList<SocialRequest> GetAllInProcessByParty(string party)
+        {
+            return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray();
         }
     }
 }

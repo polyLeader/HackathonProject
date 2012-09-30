@@ -17,7 +17,7 @@ $(document).ready(function () {
 
         if ($(this).attr('value').length >= 2) {
             for (i = 0; i < resource.length; i++) {
-                if (resource[i].Name.toLowerCase().indexOf($(this).attr('value')) != -1 && resource[i].Lang == "uk") {
+                if (resource[i].Name.toLowerCase().indexOf($(this).attr('value').toLowerCase()) != -1 && resource[i].Lang == "uk") {
                     findArray["" + findCount] = resource[i].Name;
                     findCount++;
                 }
@@ -25,7 +25,7 @@ $(document).ready(function () {
 
             if (!findCount) {
                 for (i = 0; i < resource.length; i++) {
-                    if (resource[i].Name.toLowerCase().indexOf($(this).attr('value')) != -1 && resource[i].Lang == "ru") {
+                    if (resource[i].Name.toLowerCase().indexOf($(this).attr('value').toLowerCase()) != -1 && resource[i].Lang == "ru") {
                         findArray["" + findCount] = resource[i].Name;
                         findCount++;
                     }
@@ -33,13 +33,14 @@ $(document).ready(function () {
 
                 if (!findCount) {
                     for (i = 0; i < resource.length; i++) {
-                        if (resource[i].Name.toLowerCase().indexOf($(this).attr('value')) != -1 && resource[i].Lang == "en") {
+                        if (resource[i].Name.toLowerCase().indexOf($(this).attr('value').toLowerCase()) != -1 && resource[i].Lang == "en") {
                             findArray["" + findCount] = resource[i].Name;
                             findCount++;
                         }
                     }
                 }
                 
+                $('#drop_list').html("");
             }
         } else {
             $('#drop_list').html("");
@@ -57,7 +58,7 @@ $(document).ready(function () {
                 selected = 0;
             }
 
-            for (var j = selected; j < selected + 4 && selected + 4 < findCount; j++) {
+            for (var j = selected; j < selected + 4 && j < findCount; j++) {
                 dropList.append('<div id="drop_element">' + findArray[j] + '</div>');
             }
         }

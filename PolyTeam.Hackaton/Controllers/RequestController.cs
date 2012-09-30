@@ -13,13 +13,15 @@ namespace PolyTeam.Hackaton.Controllers
     public class RequestController : Controller
     {
 
-        private readonly ProblemRepository problemRepository;
-        private readonly SocialRequestRepository socialRequestRepository;
+        private readonly IProblemRepository problemRepository;
+        private readonly ISocialRequestRepository socialRequestRepository;
+        private readonly IUserProcessor userProcessor;
 
-        public RequestController(ProblemRepository repository, SocialRequestRepository socialRequestRepository)
+        public RequestController(IProblemRepository repository, ISocialRequestRepository socialRequestRepository, IUserProcessor userProcessor)
         {
             this.problemRepository = repository;
             this.socialRequestRepository = socialRequestRepository;
+            this.userProcessor = userProcessor;
         }
         //
         // GET: /Request/
@@ -44,12 +46,13 @@ namespace PolyTeam.Hackaton.Controllers
         }
         public void Submit(SocialRequestModel request)
         {
+            var user = userProcessor.GetUserByName(User.Identity.Name);
             var domain = new SocialRequest();
             domain.Problem = this.problemRepository.GetById(request.ProblemId);
             domain.Flat = request.Flat;
             domain.House = request.House;
-            domain.User.Id = request.User.Id;
             domain.Street = request.Street;
+            domain.User = user;
             this.socialRequestRepository.Add(domain);
         }
 

@@ -48,7 +48,7 @@ namespace PolyTeam.Hackaton.Controllers
             domain.Problem = this.problemRepository.GetById(request.ProblemId);
             domain.Flat = request.Flat;
             domain.House = request.House;
-            //domain.User = request.User;
+            domain.User.Id = request.User.Id;
             domain.Street = request.Street;
             this.socialRequestRepository.Add(domain);
         }

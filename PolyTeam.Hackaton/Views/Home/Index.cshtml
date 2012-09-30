@@ -20,30 +20,30 @@
         <fieldset>
             <legend>Інформація користувача</legend>
 
-            <div class="editor-label" class="field">
+            <div class="editor-label field" >
                 @Html.LabelFor(m => m.UserName)
             </div>
-            <div class="editor-field" class="field">
+            <div class="editor-label field" >
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)
             </div>
 
-            <div class="editor-label" class="field">
+            <div class="editor-label field" >
                 @Html.LabelFor(m => m.Password)
             </div>
-            <div class="editor-field" class="field">
+            <div class="editor-label field" >
                 @Html.PasswordFor(m => m.Password)
                 @Html.ValidationMessageFor(m => m.Password)
             </div>
 
-            <div class="editor-label" class="field">
+            <div class="editor-label field" >
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe)
             </div>
-            <div class='SubmitButton button_own'>
-                <input type="submit" value="Увійти" />
+            <div class="SubmitButton button_own" >
+                <button type="submit" value="Увійти">Увійти</button>
             </div>
-            <div class="RegisterButton button_own">
+            <div class="RegisterButton button_own" >
                 <button type="submit">@Html.ActionLink("Register","Register","Account")</button>
             </div>
         </fieldset>

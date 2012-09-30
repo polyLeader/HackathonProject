@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,38 +6,36 @@ using System.Data;
 using System.Web.Security;
 using BusinessLogic.Domain;
 
-using BusinessLogic.Domain;
-
 namespace BusinessLogic.Core
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DatabaseContext _databaseContext;
+        private readonly DatabaseContext dataBaseContext;
         //private readonly IUserRepository userRepository;
 
         public UserRepository(DatabaseContext dataBaseContext)
         {
-            this._databaseContext = dataBaseContext;
+            this.dataBaseContext = dataBaseContext;
             // this.userRepository = userRepository;
         }
 
         public void CreateUser(User user)
         {
-            this._databaseContext.Entry(user).State = EntityState.Added;
-            this._databaseContext.SaveChanges();
+            this.dataBaseContext.Entry(user).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
         }
 
         public void UpdateUser(User user)
         {
-            this._databaseContext.Entry(user).State = EntityState.Modified;
-            this._databaseContext.SaveChanges();
+            this.dataBaseContext.Entry(user).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
         }
 
         public void DeleteUser(int userId)
         {
-            User user = this._databaseContext.Users.Single(x => x.Id == userId);
-            this._databaseContext.Users.Remove(user);
-            this._databaseContext.SaveChanges();
+            User user = this.dataBaseContext.Users.Single(x => x.Id == userId);
+            this.dataBaseContext.Users.Remove(user);
+            this.dataBaseContext.SaveChanges();
 
 
         }
@@ -46,7 +44,7 @@ namespace BusinessLogic.Core
         {
             try
             {
-                return this._databaseContext.Users.ToList().Single(it => it.Login == userName);
+                return this.dataBaseContext.Users.ToList().Single(it => it.Login == userName);
             }
             catch (Exception)
             {
@@ -57,24 +55,22 @@ namespace BusinessLogic.Core
 
         public string GetRole(string userName)
         {
-            return this._databaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(userName).RoleId).Select(x => x.Name).First();
+            return this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(userName).RoleId).Select(x => x.Name).First();
+        }
+
+        public User GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetCount()
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsDeputy(string userName)
         {
             return System.Web.Security.Roles.IsUserInRole(userName, "Deputy");
         }
-
-        public User GetById(int id)
-        {
-            return _databaseContext.Users.FirstOrDefault(x => x.Id == id);
-        }
-
-        public int GetCount()
-        {
-            return _databaseContext.Users.Count();
-        }
     }
-
-     
 }

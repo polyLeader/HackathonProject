@@ -16,5 +16,7 @@ namespace BusinessLogic.Domain
         public string House { get; set; }
         public int? Flat { get; set; }
         public bool? Done { get; set; }
+        public DateTime CreatingDate { get; set; }
+        public DateTime? FinishDate { get; set; }
     }
 }

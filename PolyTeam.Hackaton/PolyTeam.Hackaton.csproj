@@ -89,6 +89,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\DeputyModel.cs" />
     <Compile Include="Models\ProblemModel.cs" />
     <Compile Include="Models\SocialRequestModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -98,6 +99,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\roof.png" />
+    <Content Include="Content\img\roof_icon.png" />
+    <Content Include="Content\img\sink-shadow.png" />
+    <Content Include="Content\img\sink.png" />
     <Content Include="Content\style-index.css" />
     <Content Include="Content\style-map.css" />
     <Content Include="Content\style-register.css" />

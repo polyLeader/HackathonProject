@@ -3,7 +3,11 @@
 <script src="@Url.Content("~/Scripts/RGraph.common.dynamic.js")"></script>
 <script src="@Url.Content("~/Scripts/RGraph.common.effects.js")"></script>
 <script src="@Url.Content("~/Scripts/RGraph.line.js")"></script>
+<script src="@Url.Content("~/Scripts/RGraph.pie.js")"></script>
 <div id="taken_time_graph">
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+</div>
+<div id="myPie">
 	<canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
 </div>
 <div id="panel">
@@ -33,4 +37,21 @@
     line.Set('chart.xaxispos', 'center');
     line.Set('chart.hmargin', 5);
     RGraph.Effects.Line.jQuery.Trace(line);
+
+
+    window.onload = function() {
+        // The data to be shown on the Pie chart
+        var data = [564, 155, 499, 611, 322];
+
+        // Create the Pie chart. The arguments are the canvas ID and the data to be shown.
+        var pie = new RGraph.Pie('myPie', data);
+
+        // Configure the chart to look as you want.
+        pie.Set('chart.labels', ['Abc', 'Def', 'Ghi', 'Jkl', 'Mno']);
+        pie.Set('chart.linewidth', 5);
+        pie.Set('chart.stroke', 'white');
+
+        // Call the .Draw() chart to draw the Pie chart.
+        pie.Draw();
+    };
 </script>

@@ -32,6 +32,8 @@ namespace ParseHelpers
         public static List<Street> GetStreets(string inputFileName)
         {
             var xmlDoc = new XmlDocument();
+            WebResponse webResponse = null;
+            Stream stream = null;
 
             if (inputFileName == null)
             {
@@ -40,9 +42,9 @@ namespace ParseHelpers
 
                 reguestGET.Proxy = null;
 
-                var webResponse = reguestGET.GetResponse();
+                webResponse = reguestGET.GetResponse();
 
-                var stream = webResponse.GetResponseStream();
+                stream = webResponse.GetResponseStream();
 
                 if (stream == null)
                 {
@@ -50,9 +52,6 @@ namespace ParseHelpers
                 }
 
                 xmlDoc.Load(stream);
-
-                webResponse.Close();
-                stream.Close();
             }
             else
             {
@@ -71,7 +70,10 @@ namespace ParseHelpers
                     Name = element.InnerText
                 });
             }
-            
+
+            if (webResponse != null) webResponse.Close();
+            if (stream != null) stream.Close();
+
             return allStreets;
         }
 
@@ -82,18 +84,19 @@ namespace ParseHelpers
         /// <returns>List of structures 'Deputy'</returns>
         public static List<Deputy> GetDeputies(string inputFileName)
         {
-            var streamReader = new StreamReader(inputFileName, Encoding.UTF8);
+            StreamReader streamReader;
+            WebResponse webResponse = null;
+            Stream stream = null;
 
             if (inputFileName == null)
             {
-
                 var reguestGET = WebRequest.Create("https://dl.dropbox.com/u/33987496/HackatonProject/deputies.list");
 
                 reguestGET.Proxy = null;
 
-                var webResponse = reguestGET.GetResponse();
+                webResponse = reguestGET.GetResponse();
 
-                var stream = webResponse.GetResponseStream();
+                stream = webResponse.GetResponseStream();
 
                 if (stream == null)
                 {
@@ -101,9 +104,10 @@ namespace ParseHelpers
                 }
 
                 streamReader = new StreamReader(stream, Encoding.UTF8);
-
-                webResponse.Close();
-                stream.Close();
+            }
+            else
+            {
+                streamReader = new StreamReader(inputFileName, Encoding.UTF8);
             }
 
             var deputies = new List<Deputy>();
@@ -128,7 +132,9 @@ namespace ParseHelpers
 
                 deputies.Add(deputy);
             }
-            
+
+            if (webResponse != null) webResponse.Close();
+            if (stream != null) stream.Close();
             streamReader.Close();
 
             return deputies;

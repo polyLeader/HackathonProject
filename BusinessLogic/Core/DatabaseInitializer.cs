@@ -11,7 +11,7 @@ using ParseHelpers;
 
 namespace BusinessLogic.Core
 {
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DatabaseContext>
+    public class DatabaseInitializer : DropCreateDatabaseAlways<DatabaseContext>
     {
         private readonly ICryptoProvider _cryptoProvider;
         public DatabaseInitializer(ICryptoProvider cryptoProvider)
@@ -78,7 +78,7 @@ namespace BusinessLogic.Core
             role = new Roles {Id = 2, Name = "User"};
             context.Roles.Add(role);
 
-            // For testing deputy view
+            // TODO Must be deleted - begin
             var deput = new User
                             {
                                 FirstName = "Dima",
@@ -96,7 +96,6 @@ namespace BusinessLogic.Core
             context.Users.Add(deput);
 
             
-            // TODO Must be deleted - begin
             var random = new Random();
 
             for (var i = 0; i < 100; i++ )
@@ -130,7 +129,7 @@ namespace BusinessLogic.Core
                 social.Street = context.Streets.FirstOrDefault(x => x.Id == rand) != null
                                     ? context.Streets.FirstOrDefault(x => x.Id == rand).Name
                                     : null;
-                var tmp = random.Next(0, 6);
+                var tmp = random.Next(0, context.Problems.Count());
                 social.Problem = new Problem {Id = tmp, Name = context.Problems.FirstOrDefault(x => x.Id == (tmp)).Name};
                 social.Deputy = new User();
 

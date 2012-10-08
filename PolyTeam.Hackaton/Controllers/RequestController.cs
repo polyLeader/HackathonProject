@@ -56,7 +56,6 @@ namespace PolyTeam.Hackaton.Controllers
             domain.Street = request.Street;
             this.socialRequestRepository.Add(domain);
             return RedirectToAction("Index", "Statistics");
-        }
 
         [Authorize(Roles = "Deputy")]
         public void SetDeputyToProblem(string someProblem)

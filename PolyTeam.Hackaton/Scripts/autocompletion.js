@@ -1,6 +1,6 @@
 $(document).ready(function () {
-
     var resource;
+    
     $.ajax({
         'dataType': "JSON",
         'type': 'GET',
@@ -10,7 +10,8 @@ $(document).ready(function () {
         }
     });
 
-    $("input#Flat,input#House").prop("disabled", "true");
+    $("input#Flat, input#House").prop("disabled", "true");
+    
     $('input#Street').on('input', function () {
         var findArray = new Object();
         var findCount = 0;
@@ -24,7 +25,7 @@ $(document).ready(function () {
                 }
             }
 
-            if (!findCount) {
+            if (findCount == 0) {
                 for (i = 0; i < resource.length; i++) {
                     if (resource[i].Name.toLowerCase().indexOf($(this).attr('value').toLowerCase()) != -1 && resource[i].Lang == "ru") {
                         findArray["" + findCount] = resource[i].Name;
@@ -32,7 +33,7 @@ $(document).ready(function () {
                     }
                 }
 
-                if (!findCount) {
+                if (findCount == 0) {
                     for (i = 0; i < resource.length; i++) {
                         if (resource[i].Name.toLowerCase().indexOf($(this).attr('value').toLowerCase()) != -1 && resource[i].Lang == "en") {
                             findArray["" + findCount] = resource[i].Name;
@@ -45,8 +46,9 @@ $(document).ready(function () {
             }
         } else {
             if ($(this).attr('value').length == 0) {
-                $("input#Flat,input#House").prop("disabled", "true");
+                $("input#Flat, input#House").prop("disabled", "true");
             }
+            
             $('#drop_list').html("");
             return;
         }

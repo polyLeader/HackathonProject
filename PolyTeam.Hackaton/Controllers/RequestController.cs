@@ -33,6 +33,7 @@ namespace PolyTeam.Hackaton.Controllers
 
             var newList = new List<SelectListItem>();
             var list = problemRepository.GetAll();
+
             foreach (var currentProblem in list)
             {
                 newList.Add(new SelectListItem
@@ -41,6 +42,7 @@ namespace PolyTeam.Hackaton.Controllers
                                               Text = currentProblem.Name
                                           });
             }
+
             model.ProblemList = newList;
             return View("Index", model);
 
@@ -48,27 +50,33 @@ namespace PolyTeam.Hackaton.Controllers
         public ActionResult Submit(SocialRequestModel request)
         {
             var user = userProcessor.GetUserByName(User.Identity.Name);
-            var domain = new SocialRequest();
-            domain.Problem = this.problemRepository.GetById(request.ProblemId);
-            domain.Flat = request.Flat;
-            domain.House = request.House;
-            domain.User = user;
-            domain.Street = request.Street;
+
+            var domain = new SocialRequest
+                             {
+                                 Problem = this.problemRepository.GetById(request.ProblemId),
+                                 Flat = request.Flat,
+                                 House = request.House,
+                                 User = user,
+                                 Street = request.Street
+                             };
+
             this.socialRequestRepository.Add(domain);
+
             return RedirectToAction("Index", "Statistics");
+        }
 
         [Authorize(Roles = "Deputy")]
         public void SetDeputyToProblem(string someProblem)
         {
-            var deputy = new User();
-            deputy = userProcessor.GetUserByName(User.Identity.Name);
-            var problem = new Problem();
-            problem = problemRepository.GetProblemByName(someProblem);
+            var deputy = userProcessor.GetUserByName(User.Identity.Name);
+
+            var problem = problemRepository.GetProblemByName(someProblem);
+
             var social = new SocialRequest()
-            {
-                Deputy = deputy,
-                Problem = problem
-            };
+                             {
+                                 Deputy = deputy,
+                                 Problem = problem
+                             };
 
         }
 

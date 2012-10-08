@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="Core\CryptoProvider.cs" />
     <Compile Include="Core\DatabaseContext.cs" />
-    <Compile Include="Core\DatabaseInitialiser.cs" />
+    <Compile Include="Core\DatabaseInitializer.cs" />
     <Compile Include="Core\ICryptoProvider.cs" />
     <Compile Include="Core\IProblemRepository.cs" />
     <Compile Include="Core\ISocialRequestRepository.cs" />

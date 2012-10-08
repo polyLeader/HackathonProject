@@ -75,6 +75,11 @@ namespace ParseHelpers
             return allStreets;
         }
 
+        /// <summary>
+        /// Get all Donetsk's deputies
+        /// </summary>
+        /// <param name="inputFileName">When null - request to server for deputies list, otherwise locale file name</param>
+        /// <returns>List of structures 'Deputy'</returns>
         public static List<Deputy> GetDeputies(string inputFileName)
         {
             var streamReader = new StreamReader(inputFileName, Encoding.UTF8);
@@ -106,11 +111,11 @@ namespace ParseHelpers
 
             while (true)
             {
-                var currentString = streamReader.ReadLine();
+                var currentLine = streamReader.ReadLine();
 
-                if (currentString == null) break;
+                if (currentLine == null) break;
 
-                var tmp = currentString.Split(',');
+                var tmp = currentLine.Split(',');
 
                 // delete one space char
                 deputy.Party = tmp[1].Remove(0, 1);

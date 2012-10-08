@@ -50,7 +50,7 @@ namespace PolyTeam.Hackaton
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             
-            Database.SetInitializer(new DatabaseInitialiser(new CryptoProvider()));
+            Database.SetInitializer(new DatabaseInitializer(new CryptoProvider()));
         }
     }
 }

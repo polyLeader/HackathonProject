@@ -11,10 +11,10 @@ using ParseHelpers;
 
 namespace BusinessLogic.Core
 {
-    public class DatabaseInitialiser:DropCreateDatabaseAlways<DatabaseContext>
+    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DatabaseContext>
     {
         private readonly ICryptoProvider _cryptoProvider;
-        public DatabaseInitialiser(ICryptoProvider cryptoProvider)
+        public DatabaseInitializer(ICryptoProvider cryptoProvider)
         {
             _cryptoProvider = cryptoProvider;
         }
@@ -45,7 +45,7 @@ namespace BusinessLogic.Core
             problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
 
-            var streets = Parser.GetStreets("donetsk.osm");
+            var streets = Parser.GetStreets(null); // Get streets from Dropbox server
 
             foreach (var street in streets)
             {
@@ -54,7 +54,7 @@ namespace BusinessLogic.Core
 
             var user = new User();
 
-            var deputies = Parser.GetDeputies("deputies.list");
+            var deputies = Parser.GetDeputies(null); // Get deputies from Dropbox server
 
             foreach (var deputy in deputies)
             {
@@ -78,6 +78,7 @@ namespace BusinessLogic.Core
             role = new Roles {Id = 2, Name = "User"};
             context.Roles.Add(role);
 
+            // For testing deputy view
             var deput = new User
                             {
                                 FirstName = "Dima",
@@ -95,7 +96,7 @@ namespace BusinessLogic.Core
             context.Users.Add(deput);
 
             
-            // TODO Must be deleted
+            // TODO Must be deleted - begin
             var random = new Random();
 
             for (var i = 0; i < 100; i++ )
@@ -137,10 +138,10 @@ namespace BusinessLogic.Core
 
                 social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 30));
 
-                int randomStreetId = random.Next(0, context.Streets.Count());
-                social.User = context.Users.FirstOrDefault(x => x.Id == randomStreetId) != null
-                                    ? context.Users.FirstOrDefault(x => x.Id == randomStreetId)
-                                    : null;
+                var randomStreetId = random.Next(0, context.Streets.Count());
+                social.User = context.Users.FirstOrDefault(
+                    x => x.Id == randomStreetId) != null ?
+                    context.Users.FirstOrDefault(x => x.Id == randomStreetId) : null;
 
                 context.SocialRequests.Add(social);
             }

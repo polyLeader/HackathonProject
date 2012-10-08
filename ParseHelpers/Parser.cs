@@ -77,15 +77,32 @@ namespace ParseHelpers
 
         public static List<Deputy> GetDeputies(string inputFileName)
         {
+            var streamReader = new StreamReader(inputFileName, Encoding.UTF8);
+
             if (inputFileName == null)
             {
-                throw new IOException("Incorrect file name!");
+
+                var reguestGET = WebRequest.Create("https://dl.dropbox.com/u/33987496/HackatonProject/deputies.list");
+
+                reguestGET.Proxy = null;
+
+                var webResponse = reguestGET.GetResponse();
+
+                var stream = webResponse.GetResponseStream();
+
+                if (stream == null)
+                {
+                    throw new Exception("Can't get response from server.");
+                }
+
+                streamReader = new StreamReader(stream, Encoding.UTF8);
+
+                webResponse.Close();
+                stream.Close();
             }
 
             var deputies = new List<Deputy>();
             var deputy = new Deputy();
-
-            var streamReader = new StreamReader(inputFileName, Encoding.UTF8);
 
             while (true)
             {
@@ -95,7 +112,7 @@ namespace ParseHelpers
 
                 var tmp = currentString.Split(',');
 
-                // delete space char
+                // delete one space char
                 deputy.Party = tmp[1].Remove(0, 1);
 
                 var fullName = tmp[0].Split(' ');
@@ -106,6 +123,8 @@ namespace ParseHelpers
 
                 deputies.Add(deputy);
             }
+            
+            streamReader.Close();
 
             return deputies;
         }

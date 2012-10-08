@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Text;
 using System.Xml;
 
@@ -21,72 +24,54 @@ namespace ParseHelpers
             public string Party;
         }
 
+        /// <summary>
+        /// Get all Donetsk's streets
+        /// </summary>
+        /// <param name="inputFileName">When null - request to server for streets list, otherwise locale file name</param>
+        /// <returns>List of structures 'Street'</returns>
         public static List<Street> GetStreets(string inputFileName)
         {
+            var xmlDoc = new XmlDocument();
+
             if (inputFileName == null)
             {
-                throw new IOException("Incorrect file name!");
+
+                var reguestGET = WebRequest.Create("https://dl.dropbox.com/u/33987496/HackatonProject/streets.xml");
+
+                reguestGET.Proxy = null;
+
+                var webResponse = reguestGET.GetResponse();
+
+                var stream = webResponse.GetResponseStream();
+
+                if (stream == null)
+                {
+                    throw new Exception("Can't get response from server.");
+                }
+
+                xmlDoc.Load(stream);
+
+                webResponse.Close();
+                stream.Close();
+            }
+            else
+            {
+                xmlDoc.Load(inputFileName);
             }
 
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(inputFileName);
+            var xmlNodeList = xmlDoc.GetElementsByTagName("street");
 
-            var xmlNodeList = xmlDoc.GetElementsByTagName("way");
-
-            var currentStreet = new Street();
             var allStreets = new List<Street>();
 
-            foreach (XmlNode node in xmlNodeList)
+            foreach (XmlElement element in xmlNodeList)
             {
-                var isStreet = false;
-                foreach (XmlElement tag in node.ChildNodes)
-                {
-                    if (tag.Name != "tag") continue;
-                    
-                    var attribK = tag.GetAttribute("k");
-                    var attribV = tag.GetAttribute("v");
-                    
-                    isStreet = (attribK == "highway" &&
-                                    (attribV == "residential" ||
-                                     attribV == "tertiary" ||
-                                     attribV == "secondary" ||
-                                     attribV == "primary")) || isStreet;
-
-                    if (!isStreet) continue;
-
-                    switch (attribK)
-                    {
-                        case "name":
-                        case "name:uk":
-                            currentStreet.Lang = "uk";
-                            break;
-                        case "name:ru":
-                            currentStreet.Lang = "ru";
-                            break;
-                        case "name:en":
-                            currentStreet.Lang = "en";
-                            break;
-                        default:
-                            currentStreet.Lang = null;
-                            break;
-                    }
-                    currentStreet.Name = attribV;
-
-                    if (!allStreets.Contains(currentStreet) && currentStreet.Lang != null)
-                    {
-                        allStreets.Add(currentStreet);
-                    }
-                }
+                allStreets.Add(new Street
+                { 
+                    Lang = element.GetAttribute("lang"), 
+                    Name = element.InnerText
+                });
             }
-
-            for (var i = 0; i < allStreets.Count; i++)
-            {
-                if (allStreets[i].Lang != "uk") continue;
-
-                var tmp = new Street { Lang = "ru", Name = allStreets[i].Name };
-                if (allStreets.Contains(tmp)) allStreets.Remove(allStreets[i]);
-            }
-
+            
             return allStreets;
         }
 

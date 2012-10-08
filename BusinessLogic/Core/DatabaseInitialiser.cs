@@ -94,14 +94,16 @@ namespace BusinessLogic.Core
 
             context.Users.Add(deput);
 
-
+            
             // TODO Must be deleted
             var random = new Random();
 
             for (var i = 0; i < 100; i++ )
             {
                 int rand = random.Next(0, context.Streets.Count());
-                user.Street = context.Streets.FirstOrDefault(x => x.Id == rand).Name;
+                user.Street = context.Streets.FirstOrDefault(x => x.Id == rand) != null
+                                  ? context.Streets.FirstOrDefault(x => x.Id == rand).Name
+                                  : null;
                 user.House = null;
                 user.Flat = null;
                 user.FirstName = _cryptoProvider.GenerateCode(10);
@@ -124,8 +126,10 @@ namespace BusinessLogic.Core
 
                 social.House = random.Next(0, 60).ToString();
                 int rand = random.Next(0, context.Streets.Count());
-                social.Street = context.Streets.FirstOrDefault(x => x.Id == rand).Name;
-                var tmp = random.Next(0, 7);
+                social.Street = context.Streets.FirstOrDefault(x => x.Id == rand) != null
+                                    ? context.Streets.FirstOrDefault(x => x.Id == rand).Name
+                                    : null;
+                var tmp = random.Next(0, 6);
                 social.Problem = new Problem {Id = tmp, Name = context.Problems.FirstOrDefault(x => x.Id == (tmp)).Name};
                 social.Deputy = new User();
 
@@ -134,12 +138,15 @@ namespace BusinessLogic.Core
                 social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 30));
 
                 int randomStreetId = random.Next(0, context.Streets.Count());
-                social.User = context.Users.FirstOrDefault(x => x.Id == randomStreetId);
+                social.User = context.Users.FirstOrDefault(x => x.Id == randomStreetId) != null
+                                    ? context.Users.FirstOrDefault(x => x.Id == randomStreetId)
+                                    : null;
+
                 context.SocialRequests.Add(social);
             }
 
              // TODO Must be deleted - end
-
+            
              context.SaveChanges();
 
             base.Seed(context);

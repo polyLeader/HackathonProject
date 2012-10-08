@@ -4,16 +4,12 @@
 <script src="@Url.Content("~/Scripts/RGraph.common.effects.js")"></script>
 <script src="@Url.Content("~/Scripts/RGraph.line.js")"></script>
 <script src="@Url.Content("~/Scripts/RGraph.pie.js")"></script>
+
 <div id="taken_time_graph">
     <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
 </div>
 <div id="myPie">
-	<canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
-</div>
-<div id="panel">
-    <h3>Статистика</h3>
-    <p>1. Заявок получено...</p>
-    <p>2. Заявок обработано...</p>
+	<canvas id="cvs2" width="600" height="250">[No canvas support]</canvas>
 </div>
 <script>
     var line = new RGraph.Line('cvs', [84, -5, -30, -26, -45, 12, 84, 73, 60, 11, 56, 32]);
@@ -37,21 +33,25 @@
     line.Set('chart.xaxispos', 'center');
     line.Set('chart.hmargin', 5);
     RGraph.Effects.Line.jQuery.Trace(line);
+</script>
 
+<script>
+    var data4 = [20, 25, 10.3, 11, 34.7];
+    var pie4 = new RGraph.Pie('cvs2', data4);
+    pie4.Set('chart.labels', ['Партія Регіонів', 'Батьківщина', 'УДАР', 'Україна, Вперед', "Блок Олега Ляшка"]);
+    pie4.Set('chart.tooltips.event', 'onmousemove');
+    pie4.Set('chart.colors', ['#EC0033', '#A0D300', '#FFCD00', '#00B869', '#999999', '#FF7300', '#004CB0']);
+    pie4.Set('chart.strokestyle', 'white');
+    pie4.Set('chart.linewidth', 3);
+    pie4.Set('chart.shadow', true);
+    pie4.Set('chart.shadow.offsetx', 2);
+    pie4.Set('chart.shadow.offsety', 2);
+    pie4.Set('chart.shadow.blur', 3);
+    pie4.Set('chart.exploded', 7);
 
-    window.onload = function() {
-        // The data to be shown on the Pie chart
-        var data = [564, 155, 499, 611, 322];
+    for (var i = 0; i < data4.length; ++i) {
+        pie4.Get('chart.labels')[i] = pie4.Get('chart.labels')[i] + ', ' + data4[i] + '%';
+    }
 
-        // Create the Pie chart. The arguments are the canvas ID and the data to be shown.
-        var pie = new RGraph.Pie('myPie', data);
-
-        // Configure the chart to look as you want.
-        pie.Set('chart.labels', ['Abc', 'Def', 'Ghi', 'Jkl', 'Mno']);
-        pie.Set('chart.linewidth', 5);
-        pie.Set('chart.stroke', 'white');
-
-        // Call the .Draw() chart to draw the Pie chart.
-        pie.Draw();
-    };
+    pie4.Draw();
 </script>

@@ -35,25 +35,27 @@ namespace PolyTeam.Hackaton.Controllers
 
             return View();
         }
-
-        public void NotDone()
+        [HttpGet]
+        public ActionResult NotDone()
         {
             var list = socialRequestRepository.GetAllNotDone();
-            IList < SocialRequestModel > social= list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street}).ToList();
+            return this.Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street}).ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        public void Done()
+        [HttpGet]
+        public ActionResult Done()
         {
             var list = socialRequestRepository.GetAllDone();
-            //var deputy = 
-            IList<SocialRequestModel> social = list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street,
+            
+            return Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street,
                                                                                                          Deputy = new DeputyModel { Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName ,
                                                                                                                                     LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
                                                                                                                                     Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
                                                                                                          }
-            }).ToList();
+            }).ToList(),JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public JsonResult AllProblemsStat()
         {
             var problemRepo = problemRepository.GetAll();
@@ -61,41 +63,64 @@ namespace PolyTeam.Hackaton.Controllers
 
             var problemsList = (from problem in problemRepo let counter = socialRepo.Count(socialRequest => problem.Id == socialRequest.Problem.Id) select new AllProblemsCount {Name = problem.Name, Count = counter}).ToList();
             
-            return Json(problemsList);
+            return Json(problemsList, JsonRequestBehavior.AllowGet);
         }
 
-        public void InProcessByParty(string party)
+        [HttpGet]
+        public ActionResult InProcessByParty(string party)
         {
             var list = socialRequestRepository.GetAllInProcessByParty(party);
-            IList<SocialRequestModel> social = list.Select(socialRequestModel => new SocialRequestModel
-            {
-                Flat = socialRequestModel.Flat,
-                House = socialRequestModel.House,
-                Street = socialRequestModel.Street,
-                Deputy = new DeputyModel
-                {
-                    Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
-                    LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
-                    Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
-                }
-            }).ToList();
+            return
+                Json(
+                    list.Select(
+                        socialRequestModel =>
+                        new SocialRequestModel
+                            {
+                                Flat = socialRequestModel.Flat,
+                                House = socialRequestModel.House,
+                                Street = socialRequestModel.Street,
+                                Deputy =
+                                    new DeputyModel
+                                        {
+                                            Name =
+                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
+                                            LastName =
+                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
+                                            Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
+                                        }
+                            }).ToList(),
+                    JsonRequestBehavior.AllowGet);
         }
 
-        public void DoneByParty(string party)
+        public ActionResult DoneByParty(string party)
         {
             var list = socialRequestRepository.GetAllDoneByParty(party);
-            IList<SocialRequestModel> social = list.Select(socialRequestModel => new SocialRequestModel
-            {
-                Flat = socialRequestModel.Flat,
-                House = socialRequestModel.House,
-                Street = socialRequestModel.Street,
-                Deputy = new DeputyModel
-                {
-                    Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
-                    LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
-                    Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
-                }
-            }).ToList();
+            return
+                Json(
+                    list.Select(
+                        socialRequestModel =>
+                        new SocialRequestModel
+                            {
+                                Flat = socialRequestModel.Flat,
+                                House = socialRequestModel.House,
+                                Street = socialRequestModel.Street,
+                                Deputy =
+                                    new DeputyModel
+                                        {
+                                            Name =
+                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
+                                            LastName =
+                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
+                                            Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
+                                        }
+                            }).ToList(),
+                    JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult AllProblems()
+        {
+
+            return Json(socialRequestRepository.GetAll(), JsonRequestBehavior.AllowGet);
         }
     }
 }

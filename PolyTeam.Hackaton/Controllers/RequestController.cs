@@ -45,7 +45,7 @@ namespace PolyTeam.Hackaton.Controllers
             return View("Index", model);
 
         }
-        public void Submit(SocialRequestModel request)
+        public ActionResult Submit(SocialRequestModel request)
         {
             var user = userProcessor.GetUserByName(User.Identity.Name);
             var domain = new SocialRequest();
@@ -55,6 +55,7 @@ namespace PolyTeam.Hackaton.Controllers
             domain.User = user;
             domain.Street = request.Street;
             this.socialRequestRepository.Add(domain);
+            return RedirectToAction("Index", "Statistics");
         }
 
         [Authorize(Roles = "Deputy")]

@@ -96,7 +96,7 @@ position:absolute;
 {
     float: right;
     right: 0px;
-    width: 100px;
+    bottom: 10px;
 }
 
 .SubmitButton {

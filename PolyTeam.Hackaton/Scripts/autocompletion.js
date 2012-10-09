@@ -12,22 +12,23 @@ $(document).ready(function () {
 
     //$("input#Flat, input#House").prop("disabled", "true");
 
+    $('input#Street').attr('autocomplete', 'off');
+
     $('input#Street').on('input', function () {
         var findArray = new Object();
-
+        
         var findCount = 0;
         var i;
-        alert(resource.length);
+
+        var dropList = $('#drop_list');
 
         if ($(this).attr('value').length >= 2) {
-            
+
             for (i = 0; i < resource.length; i++) {
                 if (resource[i].Name.toLowerCase().indexOf($(this).attr('value').toLowerCase()) != -1 && resource[i].Lang == "uk") {
                     findArray["" + findCount] = resource[i].Name;
-
                     findCount++;
                 }
-
             }
 
             if (findCount == 0) {
@@ -46,22 +47,22 @@ $(document).ready(function () {
                         }
                     }
                 }
-
-                $('#drop_list').html("");
             }
-        } else {
+
+            dropList.html("");
+        }
+        else {
             if ($(this).attr('value').length == 0) {
                 //$("input#Flat, input#House").prop("disabled", "true");
             }
 
-            //$('#drop_list').html("");
+            dropList.html("");
             return;
         }
 
         //alert(findCount);
 
         if (findCount) {
-            var dropList = $('#drop_list');
             var selected = dropList.attr('class');
 
             //$("#drop_list").show();

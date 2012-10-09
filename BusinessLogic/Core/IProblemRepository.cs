@@ -14,5 +14,6 @@ namespace BusinessLogic.Core
         IList<Problem> GetAll();
         Problem GetById(int id);
         Problem GetProblemByName(string someProblem);
+        int GetProblemIdByName(string someProblem);
     }
 }

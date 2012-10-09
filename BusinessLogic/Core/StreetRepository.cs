@@ -33,5 +33,22 @@ namespace BusinessLogic.Core
         {
             return _databaseContext.Streets.FirstOrDefault(x => x.Id == id);
         }
+
+        public int GetIdByName(string streetName)
+        {
+            try
+            {
+                return _databaseContext.Streets.First(x => x.Name == streetName).Id;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        public string GetNameById(int streetId)
+        {
+            return _databaseContext.Streets.First(x => x.Id == streetId).Name;
+        }
     }
 }

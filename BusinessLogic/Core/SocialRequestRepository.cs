@@ -10,104 +10,126 @@ using System.Web;
 
 namespace BusinessLogic.Core
 {
-    public class SocialRequestRepository:ISocialRequestRepository
+    public class SocialRequestRepository : ISocialRequestRepository
     {
         private readonly DatabaseContext _databaseContext;
-        private readonly IUserProcessor userProcessor;
-       //rivate readonly IProblemRepository problemRepository;
+        private readonly IUserProcessor _userProcessor;
 
         public SocialRequestRepository(DatabaseContext databaseContext, IUserProcessor userProcessor)
         {
-            this._databaseContext = databaseContext;
-            this.userProcessor = userProcessor;
-            //this.problemRepository = problemRepository;
+            _databaseContext = databaseContext;
+            _userProcessor = userProcessor;
         }
 
         public SocialRequest Add(SocialRequest socialRequest)
         {
-            this._databaseContext.SocialRequests.Add(socialRequest);
+            _databaseContext.SocialRequests.Add(socialRequest);
             return socialRequest;
         }
 
         public SocialRequest Update(SocialRequest socialRequest)
         {
-            this._databaseContext.Entry(socialRequest).State = EntityState.Modified;
+            _databaseContext.Entry(socialRequest).State = EntityState.Modified;
             return socialRequest;
         }
 
         public void Delete(SocialRequest socialRequest)
         {
-            this._databaseContext.Entry(socialRequest).State = EntityState.Deleted; 
+            _databaseContext.Entry(socialRequest).State = EntityState.Deleted; 
         }
 
         public IList<SocialRequest> GetAll()
         {
-            return this._databaseContext.SocialRequests.ToArray();
+            return _databaseContext.SocialRequests.ToArray();
         }
 
-        public IList<SocialRequest> GetByStreet(string street)
+        public IList<SocialRequest> GetByStreetId(int streetId)
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Street == street).ToArray();
+            return _databaseContext.SocialRequests.Where(x => x.StreetId == streetId).ToArray();
         }
 
-        public IList<SocialRequest> GetByUser(User user)
+        public IList<SocialRequest> GetByUserId(int userId)
         {
-            return this._databaseContext.SocialRequests.Where(x => x.User == user).ToArray();
+            return _databaseContext.SocialRequests.Where(x => x.UserId == userId).ToArray();
         }
 
-        public IList<SocialRequest> GetByProblem(Problem problem)
+        public IList<SocialRequest> GetByProblemId(int problemId)
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Problem == problem).ToArray();
+            return _databaseContext.SocialRequests.Where(x => x.ProblemId == problemId).ToArray();
         }
 
         public IList<SocialRequest> GetAllNotDone()
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Done == null).ToArray();
+            return _databaseContext.SocialRequests.Where(x => x.Done == false).ToArray();
         }
 
         public IList<SocialRequest> GetAllDone()
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Done == true).ToArray();
+            return _databaseContext.SocialRequests.Where(x => x.Done == true).ToArray();
         }
 
         public IList<SocialRequest> GetAllDoneByParty(string party)
         {
-            return this._databaseContext.SocialRequests.Where(x => (x.Done == true && x.User.Party == party)).ToArray();
+            // Шукаем всех депутов с заданой партией
+            var deputies = _databaseContext.Users.Where(x => (x.Party == party && x.RoleId == 1));
+
+            var allDone = new List<SocialRequest>();
+
+            // Выбираются все запросы, где указан депутат с запрошенной партией
+            // и помещается в окончательный список
+            foreach (var list in deputies.Select(deputy => _databaseContext.SocialRequests.Where(x => (x.Done == true && x.DeputyId == deputy.Id)).ToList()))
+            {
+                allDone.AddRange(list);
+            }
+
+            return allDone;
         }
 
         public IList<SocialRequest> GetAllInProcessByParty(string party)
         {
-            return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray();
+            // Шукаем всех депутов с заданой партией
+            var deputies = _databaseContext.Users.Where(x => (x.Party == party && x.RoleId == 1));
+
+            var allDone = new List<SocialRequest>();
+
+            // Выбираются все запросы, где указан депутат с запрошенной партией
+            // и помещается в окончательный список
+            foreach (var list in deputies.Select(deputy => _databaseContext.SocialRequests.Where(x => (x.Done == false && x.DeputyId == deputy.Id)).ToList()))
+            {
+                allDone.AddRange(list);
+            }
+
+            return allDone;
         }
 
         public int CounterAllRequests()
         {
-            return this._databaseContext.SocialRequests.ToArray().Count();
+            return _databaseContext.SocialRequests.Count();
         }
 
         public int CounterAllDoneRequests()
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Done == true).ToArray().Count();
+            return _databaseContext.SocialRequests.Where(x => x.Done == true).ToArray().Count();
         }
 
-        public int ConterAllInProcessRequests()
+        public int CounterAllInProcessRequests()
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Done == false).ToArray().Count();
+            return _databaseContext.SocialRequests.Where(x => x.Done == false).ToArray().Count();
         }
 
         public int CounterAllNotInProcessRequests()
         {
-            return this._databaseContext.SocialRequests.Where(x => x.Done == null).ToArray().Count();
+            return _databaseContext.SocialRequests.Where(x => x.Done == null).ToArray().Count();
         }
 
         public int CounterAllDoneRequestsByParty(string party)
         {
-            return this._databaseContext.SocialRequests.Where(x => (x.Done == true && x.User.Party == party)).ToArray().Count();
+            return this.GetAllDoneByParty(party).Count;
         }
 
         public int CounterAllInprocessRequestsByParty(string party)
         {
-            return this._databaseContext.SocialRequests.Where(x => (x.Done == false && x.User.Party == party)).ToArray().Count();
+            return this.GetAllInProcessByParty(party).Count;
         } 
 
     }

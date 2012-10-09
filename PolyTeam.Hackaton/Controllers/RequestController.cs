@@ -14,15 +14,17 @@ namespace PolyTeam.Hackaton.Controllers
     public class RequestController : Controller
     {
 
-        private readonly IProblemRepository problemRepository;
-        private readonly ISocialRequestRepository socialRequestRepository;
-        private readonly IUserProcessor userProcessor;
+        private readonly IProblemRepository _problemRepository;
+        private readonly ISocialRequestRepository _socialRequestRepository;
+        private readonly IUserProcessor _userProcessor;
+        private readonly IStreetRepository _streetRepository;
 
-        public RequestController(IProblemRepository repository, ISocialRequestRepository socialRequestRepository, IUserProcessor userProcessor)
+        public RequestController(IProblemRepository repository, ISocialRequestRepository socialRequestRepository, IUserProcessor userProcessor, IStreetRepository streetRepository)
         {
-            this.problemRepository = repository;
-            this.socialRequestRepository = socialRequestRepository;
-            this.userProcessor = userProcessor;
+            _problemRepository = repository;
+            _socialRequestRepository = socialRequestRepository;
+            _userProcessor = userProcessor;
+            _streetRepository = streetRepository;
         }
         //
         // GET: /Request/
@@ -32,7 +34,7 @@ namespace PolyTeam.Hackaton.Controllers
              var model = new SocialRequestModel();
 
             var newList = new List<SelectListItem>();
-            var list = problemRepository.GetAll();
+            var list = _problemRepository.GetAll();
 
             foreach (var currentProblem in list)
             {
@@ -49,18 +51,19 @@ namespace PolyTeam.Hackaton.Controllers
         }
         public ActionResult Submit(SocialRequestModel request)
         {
-            var user = userProcessor.GetUserByName(User.Identity.Name);
+            var userId = _userProcessor.GetUserIdByName(User.Identity.Name);
+            var streetId = _streetRepository.GetIdByName(request.Street);
 
             var domain = new SocialRequest
                              {
-                                 Problem = this.problemRepository.GetById(request.ProblemId),
+                                 ProblemId = request.ProblemId,
                                  Flat = request.Flat,
                                  House = request.House,
-                                 User = user,
-                                 Street = request.Street
+                                 UserId = userId,
+                                 StreetId = streetId
                              };
 
-            this.socialRequestRepository.Add(domain);
+            _socialRequestRepository.Add(domain);
 
             return RedirectToAction("Index", "Statistics");
         }
@@ -68,14 +71,14 @@ namespace PolyTeam.Hackaton.Controllers
         [Authorize(Roles = "Deputy")]
         public void SetDeputyToProblem(string someProblem)
         {
-            var deputy = userProcessor.GetUserByName(User.Identity.Name);
+            var deputyId = _userProcessor.GetUserIdByName(User.Identity.Name);
 
-            var problem = problemRepository.GetProblemByName(someProblem);
+            var problem = _problemRepository.GetProblemByName(someProblem);
 
             var social = new SocialRequest()
                              {
-                                 Deputy = deputy,
-                                 Problem = problem
+                                 DeputyId = deputyId,
+                                 ProblemId = problem.Id
                              };
 
         }

@@ -15,6 +15,8 @@ namespace BusinessLogic.Core
 
         void DeleteUser(int userId);
 
+        int GetIdByName(string userName);
+
         User GetByName(string userName);
 
         bool IsDeputy(string roleName);

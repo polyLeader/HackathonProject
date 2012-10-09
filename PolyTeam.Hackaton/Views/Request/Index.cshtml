@@ -17,16 +17,16 @@
             <legend>Інформація користувача</legend>
             
             <div class="field editor-label">
-                @Html.LabelFor(m => m.Street)
+                @Html.LabelFor(m => m.Street, "Вулиця")
                 @Html.TextBoxFor(m => m.Street)
             </div>
             <div id="drop_list"></div>
             <div class="field editor-label">
-                @Html.LabelFor(m => m.House)
+                @Html.LabelFor(m => m.House, "Будинок")
                 @Html.TextBoxFor(m => m.House)
             </div>
             <div class="field editor-label">
-                @Html.LabelFor(m => m.Flat)
+                @Html.LabelFor(m => m.Flat, "Кімната")
                 @Html.TextBoxFor(m => m.Flat)
             </div>
             <div class="editor-field field">

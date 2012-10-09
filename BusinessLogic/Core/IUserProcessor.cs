@@ -14,5 +14,9 @@ namespace BusinessLogic.Core
         bool LogOn(string userName, string userPassword);
 
         User GetUserByName(string userName);
+
+        int GetUserIdByName(string userName);
+
+        User GetUserById(int userId);
     }
 }

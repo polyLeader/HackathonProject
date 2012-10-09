@@ -11,49 +11,63 @@
 	border-bottom-right-radius:8px;
     border-bottom-left-radius:8px;
 }
-#panel .field{
+
+#panel .field
+{
 	margin: 15px;
 }
-#panel .SubmitButton input{
+
+#panel .SubmitButton input
+{
 	position:relative;
 	float:right;
 	margin:0 50px;
 	width:100px;
 }
-#panel .submit {
+
+#panel .submit
+{
 	float:left;
 	margin: 0;
 	padding:0;
 	border:0;
 }
+
 legend, .field
 {
     margin: 0 15px 0 0;
 }
+
 form
 {
     margin:0 !important;
-    }
-input#House, input#Flat {
-    disabled: true;
-}
-#drop_list{
-    background: white;
-    width: 200px;
-    overflow: auto;
-    margin-left: 20px;
 }
 
-#Street {
+#drop_list{
+    background: grey;
+    width: 200px;
+    overflow: auto;
+    margin-left: 23px;
+    margin-top: -24px;
+    position: absolute;
+}
+
+#Street
+{
     margin: 0px;
 }
-.drop_element {
+
+.drop_element
+{
     cursor: pointer;
     color: black;
 }
-.drop_element:hover {
+
+.drop_element:hover
+{
     background: #63AFD0;
 }
+
 .drop_element.active
 {
     background: #1729B0;

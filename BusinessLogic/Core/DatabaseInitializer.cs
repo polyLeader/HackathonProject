@@ -11,7 +11,7 @@ using ParseHelpers;
 
 namespace BusinessLogic.Core
 {
-    public class DatabaseInitializer : DropCreateDatabaseAlways<DatabaseContext>
+    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DatabaseContext>
     {
         private readonly ICryptoProvider _cryptoProvider;
         public DatabaseInitializer(ICryptoProvider cryptoProvider)
@@ -103,10 +103,11 @@ namespace BusinessLogic.Core
 
             for (var i = 0; i < 100; i++ )
             {
-                var rand = random.Next(0, context.Streets.Count());
-                user.Street = context.Streets.FirstOrDefault(x => x.Id == rand) != null
-                                  ? context.Streets.FirstOrDefault(x => x.Id == rand).Name
-                                  : null;
+                var rand = random.Next(0, context.Streets.Count() - 1);
+
+                var street = context.Streets.FirstOrDefault(x => x.Id == rand).Name;
+
+                user.Street = street;
                 user.House = null;
                 user.Flat = null;
                 user.FirstName = _cryptoProvider.GenerateCode(10);
@@ -131,19 +132,20 @@ namespace BusinessLogic.Core
 
                 social.House = random.Next(0, 60).ToString();
 
-                var rand = random.Next(0, context.Streets.Count() - 1);
-                social.Street = context.Streets.FirstOrDefault(x => x.Id ==rand).Name;
+                social.StreetId = random.Next(0, context.Streets.Count() - 1);
 
-                rand = random.Next(0, context.Problems.Count() - 1);
-                social.Problem = context.Problems.FirstOrDefault(x => x.Id == rand);
-                social.Deputy = new User();
+                social.ProblemId = random.Next(0, context.Problems.Count() - 1);
+
+                var allDeputies = context.Users.Where(x => x.RoleId == 1).ToList();
+
+                social.DeputyId = allDeputies[random.Next(0, allDeputies.Count - 1)].Id;
 
                 social.CreatingDate = RandomDay();
-                social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 40));
+                if (social.Done == true) social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 40));
 
-                rand = random.Next(0, context.Users.Count() - 1);
+                var allUsers = context.Users.Where(x => x.RoleId == 2).ToList();
 
-                social.User = context.Users.FirstOrDefault(x => x.Id == rand);
+                social.UserId = allDeputies[random.Next(0, allUsers.Count - 1)].Id;
 
                 context.SocialRequests.Add(social);
             }

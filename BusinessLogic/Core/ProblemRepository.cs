@@ -7,7 +7,7 @@ using BusinessLogic.Domain;
 
 namespace BusinessLogic.Core
 {
-    public class ProblemRepository:IProblemRepository
+    public class ProblemRepository : IProblemRepository
     {
         private readonly DatabaseContext _databaseContext;
 
@@ -31,22 +31,27 @@ namespace BusinessLogic.Core
 
         public void Delete(Problem problem)
         {
-            this._databaseContext.Entry(problem).State = EntityState.Deleted;
+            _databaseContext.Entry(problem).State = EntityState.Deleted;
         }
 
         public IList<Problem> GetAll()
         {
-            return this._databaseContext.Problems.ToArray();
+            return _databaseContext.Problems.ToArray();
         }
 
         public Problem GetById(int id)
         {
-            return this._databaseContext.Problems.FirstOrDefault(x => x.Id == id);
+            return _databaseContext.Problems.FirstOrDefault(x => x.Id == id);
         }
 
         public Problem GetProblemByName(string someProblem)
         {
-            return this._databaseContext.Problems.ToList().Single(it => it.Name == someProblem);
+            return _databaseContext.Problems.ToList().Single(it => it.Name == someProblem);
+        }
+
+        public int GetProblemIdByName(string someProblem)
+        {
+            return this.GetProblemByName(someProblem).Id;
         }
     }
 }

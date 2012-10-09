@@ -9,10 +9,10 @@ namespace BusinessLogic.Domain
     public class SocialRequest
     {
         public int Id { get; set; }
-        public virtual User User { get; set; }
-        public virtual User Deputy { get; set; }
-        public Problem Problem { get; set; }
-        public string Street { get; set; }
+        public int UserId { get; set; }
+        public int? DeputyId { get; set; }
+        public int ProblemId { get; set; }
+        public int StreetId { get; set; }
         public string House { get; set; }
         public int? Flat { get; set; }
         public bool? Done { get; set; }

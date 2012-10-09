@@ -9,21 +9,21 @@ namespace BusinessLogic.Core
 {
     public class UserProcessor : IUserProcessor
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository _userRepository;
 
-        private readonly ICryptoProvider cryptoProvider;
+        private readonly ICryptoProvider _cryptoProvider;
 
         public UserProcessor(IUserRepository userRepository, ICryptoProvider cryptoProvider)
         {
-            this.userRepository = userRepository;
-            this.cryptoProvider = cryptoProvider;
+            _userRepository = userRepository;
+            _cryptoProvider = cryptoProvider;
         }
 
 
         public bool CreateUser(User user)
         {
             //var CurUser = this.userRepository.GetUserByName(user.Name);
-            if (GetUserByName(user.Login) != null)
+            if (GetUserIdByName(user.Login) != -1)
             {
                 return false;
             }
@@ -33,7 +33,7 @@ namespace BusinessLogic.Core
                 LastName = user.LastName,
                 SecondName = user.SecondName,
                 Login = user.Login,
-                Hash = this.cryptoProvider.EncryptString(user.Hash),
+                Hash = _cryptoProvider.EncryptString(user.Hash),
                 RoleId = 2,
                 Street = user.Street,
                 House = user.House,
@@ -42,20 +42,20 @@ namespace BusinessLogic.Core
                 PhoneNumber = user.PhoneNumber
             };
 
-            this.userRepository.CreateUser(newUser);
+            _userRepository.CreateUser(newUser);
             return true;
         }
 
         public bool LogOn(string userName, string userPassword)
         {
             //User user = new User(GetUserByName(userName));
-            var user = this.userRepository.GetByName(userName);
+            var user = _userRepository.GetByName(userName);
             if (user == null)
             {
                 return false;
             }
 
-            if (this.cryptoProvider.ComparePassword(user.Hash, userPassword))
+            if (_cryptoProvider.ComparePassword(user.Hash, userPassword))
             {
                 FormsAuthentication.SetAuthCookie(user.Login, true);
                 return true;
@@ -68,7 +68,32 @@ namespace BusinessLogic.Core
         {
             try
             {
-                return this.userRepository.GetByName(userName);
+                return _userRepository.GetByName(userName);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
+        }
+
+        public int GetUserIdByName(string userName)
+        {
+            try
+            {
+                return _userRepository.GetIdByName(userName);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        public User GetUserById(int userId)
+        {
+            try
+            {
+                return _userRepository.GetById(userId);
             }
             catch (Exception)
             {

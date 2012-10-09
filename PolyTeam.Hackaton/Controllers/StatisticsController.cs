@@ -19,57 +19,64 @@ namespace PolyTeam.Hackaton.Controllers
 
         //
         // GET: /Statistics/
-        private readonly IProblemRepository problemRepository;
-        private readonly ISocialRequestRepository socialRequestRepository;
-        private readonly IUserProcessor userProcessor;
+        private readonly IProblemRepository _problemRepository;
+        private readonly ISocialRequestRepository _socialRequestRepository;
+        private readonly IUserProcessor _userProcessor;
+        private readonly IStreetRepository _streetRepository;
 
         public StatisticsController(IProblemRepository repository, ISocialRequestRepository socialRequestRepository, IUserProcessor userProcessor)
         {
-            this.problemRepository = repository;
-            this.socialRequestRepository = socialRequestRepository;
-            this.userProcessor = userProcessor;
+            this._problemRepository = repository;
+            this._socialRequestRepository = socialRequestRepository;
+            this._userProcessor = userProcessor;
         }
 
         public ActionResult Index()
         {
-
             return View();
         }
+
         [HttpGet]
-        public ActionResult NotDone()
+        public JsonResult NotDone()
         {
-            var list = socialRequestRepository.GetAllNotDone();
-            return this.Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street}).ToList(), JsonRequestBehavior.AllowGet);
+            var list = _socialRequestRepository.GetAllNotDone();
+            
+            // TODO Now not work
+            //return this.Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.StreetId}).ToList(), JsonRequestBehavior.AllowGet);
+            return null;
         }
 
         [HttpGet]
-        public ActionResult Done()
+        public JsonResult Done()
         {
-            var list = socialRequestRepository.GetAllDone();
+            var list = _socialRequestRepository.GetAllDone();
             
-            return Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street,
+            // TODO now not work
+            /*return Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street,
                                                                                                          Deputy = new DeputyModel { Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName ,
                                                                                                                                     LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
                                                                                                                                     Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
                                                                                                          }
-            }).ToList(),JsonRequestBehavior.AllowGet);
+            }).ToList(),JsonRequestBehavior.AllowGet);*/
+
+            return null;
         }
 
         [HttpGet]
         public JsonResult AllProblemsStat()
         {
-            var problemRepo = problemRepository.GetAll();
-            var socialRepo = socialRequestRepository.GetAll();
+            var problemRepo = _problemRepository.GetAll();
+            var socialRepo = _socialRequestRepository.GetAll();
 
-            var problemsList = (from problem in problemRepo let counter = socialRepo.Count(socialRequest => problem.Id == socialRequest.Problem.Id) select new AllProblemsCount {Name = problem.Name, Count = counter}).ToList();
+            var problemsList = (from problem in problemRepo let counter = socialRepo.Count(socialRequest => problem.Id == socialRequest.ProblemId) select new AllProblemsCount {Name = problem.Name, Count = counter}).ToList();
             
             return Json(problemsList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult InProcessByParty(string party)
+        public  JsonResult InProcessByParty(string party)
         {
-            var list = socialRequestRepository.GetAllInProcessByParty(party);
+            var list = _socialRequestRepository.GetAllInProcessByParty(party);
             return
                 Json(
                     list.Select(
@@ -78,23 +85,24 @@ namespace PolyTeam.Hackaton.Controllers
                             {
                                 Flat = socialRequestModel.Flat,
                                 House = socialRequestModel.House,
-                                Street = socialRequestModel.Street,
+                                Street = _streetRepository.GetNameById(socialRequestModel.StreetId),
                                 Deputy =
                                     new DeputyModel
                                         {
                                             Name =
-                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
+                                                _userProcessor.GetUserById((int) socialRequestModel.DeputyId).FirstName,
                                             LastName =
-                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
-                                            Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
+                                                _userProcessor.GetUserById((int) socialRequestModel.DeputyId).LastName,
+                                            Party = _userProcessor.GetUserById((int) socialRequestModel.DeputyId).Party
                                         }
                             }).ToList(),
                     JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DoneByParty(string party)
+        [HttpGet]
+        public JsonResult DoneByParty(string party)
         {
-            var list = socialRequestRepository.GetAllDoneByParty(party);
+            var list = _socialRequestRepository.GetAllDoneByParty(party);
             return
                 Json(
                     list.Select(
@@ -103,24 +111,23 @@ namespace PolyTeam.Hackaton.Controllers
                             {
                                 Flat = socialRequestModel.Flat,
                                 House = socialRequestModel.House,
-                                Street = socialRequestModel.Street,
+                                Street = _streetRepository.GetNameById(socialRequestModel.StreetId),
                                 Deputy =
                                     new DeputyModel
                                         {
-                                            Name =
-                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName,
-                                            LastName =
-                                                userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
-                                            Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
+                                            Name = _userProcessor.GetUserById((int) socialRequestModel.DeputyId).FirstName,
+                                            LastName = _userProcessor.GetUserById((int) socialRequestModel.DeputyId).LastName,
+                                            Party = _userProcessor.GetUserById((int) socialRequestModel.DeputyId).Party
                                         }
                             }).ToList(),
                     JsonRequestBehavior.AllowGet);
         }
+
         [HttpGet]
         public ActionResult AllProblems()
         {
 
-            return Json(socialRequestRepository.GetAll(), JsonRequestBehavior.AllowGet);
+            return Json(_socialRequestRepository.GetAll(), JsonRequestBehavior.AllowGet);
         }
     }
 }

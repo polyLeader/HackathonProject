@@ -8,5 +8,7 @@ namespace BusinessLogic.Core
         Street Add(Street street);
         IEnumerable<Street> GetAll();
         Street GetById(int id);
+        int GetIdByName(string streetName);
+        string GetNameById(int streetId);
     }
 }

@@ -40,6 +40,18 @@ namespace BusinessLogic.Core
 
         }
 
+        public int GetIdByName(string userName)
+        {
+            try
+            {
+                return this.dataBaseContext.Users.ToList().Single(it => it.Login == userName).Id;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
         public User GetByName(string userName)
         {
             try
@@ -48,7 +60,6 @@ namespace BusinessLogic.Core
             }
             catch (Exception)
             {
-
                 return null;
             }
         }

@@ -19,14 +19,6 @@
     <div id="register">
         <fieldset>
             <legend>Account Information</legend>
-
-            <div class="editor-label">
-                @Html.LabelFor(m => m.Login)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(m => m.Login)
-                @Html.ValidationMessageFor(m => m.Login)
-            </div>
             
             <div class="editor-label">
                 @Html.LabelFor(m => m.LastName)
@@ -47,10 +39,18 @@
             <div class="editor-label">
                 @Html.LabelFor(m => m.SecondName)
             </div>
-              <div class="editor-field">
-                  @Html.TextBoxFor(m => m.SecondName)
-                  @Html.ValidationMessageFor(m => m.SecondName)
-              </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.SecondName)
+                @Html.ValidationMessageFor(m => m.SecondName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Login)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Login)
+                @Html.ValidationMessageFor(m => m.Login)
+            </div>
 
             <div class="editor-label">
                 @Html.LabelFor(m => m.Password)

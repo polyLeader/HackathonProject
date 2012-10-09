@@ -45,7 +45,7 @@ namespace BusinessLogic.Core
             problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
 
-            var streets = Parser.GetStreets(null); // Get streets from Dropbox server
+            var streets = Parser.GetStreets("streets.xml"); // Get streets from Dropbox server
 
             foreach (var street in streets)
             {
@@ -54,7 +54,7 @@ namespace BusinessLogic.Core
 
             var user = new User();
 
-            var deputies = Parser.GetDeputies(null); // Get deputies from Dropbox server
+            var deputies = Parser.GetDeputies("deputies.list"); // Get deputies from Dropbox server
 
             foreach (var deputy in deputies)
             {
@@ -78,6 +78,8 @@ namespace BusinessLogic.Core
             role = new Roles {Id = 2, Name = "User"};
             context.Roles.Add(role);
 
+            context.SaveChanges();
+
             // TODO Must be deleted - begin
             var deput = new User
                             {
@@ -95,12 +97,13 @@ namespace BusinessLogic.Core
 
             context.Users.Add(deput);
 
+            context.SaveChanges();
             
             var random = new Random();
 
             for (var i = 0; i < 100; i++ )
             {
-                int rand = random.Next(0, context.Streets.Count());
+                var rand = random.Next(0, context.Streets.Count());
                 user.Street = context.Streets.FirstOrDefault(x => x.Id == rand) != null
                                   ? context.Streets.FirstOrDefault(x => x.Id == rand).Name
                                   : null;
@@ -116,40 +119,40 @@ namespace BusinessLogic.Core
                 context.Users.Add(user);
             }
 
+            context.SaveChanges();
+
             for (var i = 0; i < 200; i++)
             {
                 var social = new SocialRequest();
 
-                if (i % 3 == 0) social.Done = true;
-                else if (i % 2 == 0) social.Done = false;
+                if (i%3 == 0) social.Done = true;
+                else if (i%2 == 0) social.Done = false;
                 else social.Done = null;
 
                 social.House = random.Next(0, 60).ToString();
-                int rand = random.Next(0, context.Streets.Count());
-                social.Street = context.Streets.FirstOrDefault(x => x.Id == rand) != null
-                                    ? context.Streets.FirstOrDefault(x => x.Id == rand).Name
-                                    : null;
-                var tmp = random.Next(0, context.Problems.Count());
-                social.Problem = new Problem {Id = tmp, Name = context.Problems.FirstOrDefault(x => x.Id == (tmp)).Name};
+
+                var rand = random.Next(0, context.Streets.Count() - 1);
+                social.Street = context.Streets.FirstOrDefault(x => x.Id ==rand).Name;
+
+                rand = random.Next(0, context.Problems.Count() - 1);
+                social.Problem = context.Problems.FirstOrDefault(x => x.Id == rand);
                 social.Deputy = new User();
 
                 social.CreatingDate = RandomDay();
+                social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 40));
 
-                social.FinishDate = social.CreatingDate.AddDays(random.Next(0, 30));
+                rand = random.Next(0, context.Users.Count() - 1);
 
-                var randomStreetId = random.Next(0, context.Streets.Count());
-                social.User = context.Users.FirstOrDefault(
-                    x => x.Id == randomStreetId) != null ?
-                    context.Users.FirstOrDefault(x => x.Id == randomStreetId) : null;
+                social.User = context.Users.FirstOrDefault(x => x.Id == rand);
 
                 context.SocialRequests.Add(social);
             }
 
-             // TODO Must be deleted - end
-            
-             context.SaveChanges();
+            context.SaveChanges();
 
-            base.Seed(context);
+             // TODO Must be deleted - end
+
+            base.Seed(context); // Don't delete
         }
     }
 }

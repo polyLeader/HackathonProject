@@ -46,7 +46,6 @@ namespace BusinessLogic.Core
 
         public Problem GetProblemByName(string someProblem)
         {
-
             return this._databaseContext.Problems.ToList().Single(it => it.Name == someProblem);
         }
     }

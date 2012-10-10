@@ -44,12 +44,14 @@ form
 }
 
 #drop_list{
-    background: grey;
-    width: 200px;
+    background: #FFF;
+    width: 220px;
     overflow: auto;
-    margin-left: 23px;
-    margin-top: -24px;
+    margin-left: 15px;
+    margin-top: -15px;
     position: absolute;
+    border-radius: 5px;
+    opacity: 0.8;
 }
 
 #Street
@@ -62,6 +64,11 @@ form
     cursor: pointer;
     color: black;
     display: block;
+    padding-left: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 4px;
+    border-radius: 5px;
 }
 
 .drop_element:hover

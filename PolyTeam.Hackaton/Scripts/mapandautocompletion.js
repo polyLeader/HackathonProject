@@ -9,7 +9,7 @@
         zoom: 14
     });
 
-    var marker = new L.Marker(map.getCenter(), { draggable: true });
+    var marker = new L.Marker(map.locate(), { draggable: true });
     map.addLayer(marker);
 
     L.tileLayer('http://{s}.tile.cloudmade.com/e37d73e201f94dd78191e2470055aec0/997/256/{z}/{x}/{y}.png', {
@@ -24,10 +24,10 @@
     marker.on('dragend', onClickAndDragMarker);
 
     function onClickAndDragMarker(event) {
-        
+
         var lat = 0.0;
         var lng = 0.0;
-        
+
         if (event.type == 'click') {
             lat = event.latlng.lat;
             lng = event.latlng.lng;
@@ -74,10 +74,10 @@
         }
     });
 
-    var elementsNum = 4;
+    var elementsNum = 10;
     var streetFound = false;
 
-    $('input#Street').attr('autocomplete', 'off');
+    $('input#Street').attr('autocomplete', 'off').focus();
     $('input#House, input#Flat, select#ProblemId').attr('disabled', 'disabled');
 
     $('input#Street').on('input', function () {
@@ -131,32 +131,55 @@
             }
             streetFound = true;
         }
-
-        $('.drop_element:first').addClass('active');
     });
 
     $('input#Street').on('keydown', function (e) {
+        if ($('.drop_element').index() == -1) {
+            return;
+        }
+
         var keyCode = e.which;
 
-        $('#drop_list').focus();
         if (keyCode == 38 || keyCode == 40) {
 
             keyCode += -40 + 1;
 
             var current = $('.drop_element.active');
 
-            if (current.index() + keyCode >= elementsNum || current.index() + keyCode < 0) return;
+            var idx;
+
+            if (current.index() == -1) idx = -1;
+            else idx = current.index();
+
+            if (idx + keyCode >= elementsNum || idx + keyCode < 0) return;
 
             current.removeClass('active');
-            var next = $('.drop_element:eq(' + (current.index() + keyCode) + ')').addClass('active');
 
-            //$(this).val(next.html());
+            if (keyCode == -1 && idx < 0) {
+                idx = elementsNum - 1;
+            }
+            else {
+                idx += keyCode;
+            }
+
+            var next = $('.drop_element:eq(' + idx + ')').addClass('active');
+
+            $(this).val(next.text());
+
+            if (keyCode == -1) {
+
+            }
         }
-        else if (keyCode == 13 && $('#drop_list:visible').index() != -1) {
+    });
 
-            this.val($('.drop_element.active').html());
+    $('form').submit(function () {
+        if ($('#drop_list:visible') != -1) {
             $('#drop_list').html('');
+            $('input#House, input#Flat, select#ProblemId').removeAttr('disabled');
+            $('input#House').focus();
+            return false;
         }
+        return true;
     });
 
     $('input#Street').on('blur', function () {
@@ -170,10 +193,11 @@
                 $('input#House').focus();
             } else if (!streetFound) {
                 $('input#House, input#Flat, select#ProblemId').attr('disabled', 'disabled');
+            } else {
+                $('#drop_list').hide();
             }
         }
     });
-
 
     $('input#Street').on('focus', function () {
         $('#drop_list').show();
@@ -188,7 +212,7 @@
     });
 
     $('#map').on('click', function () {
-        $('#drop_list').html("");
+        $('#drop_list').html('');
     });
 
     $('input#House').on('blur', function () {

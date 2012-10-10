@@ -20,7 +20,6 @@ namespace PolyTeam.Hackaton.Controllers
         {
             public string Road;
             public string HouseNumber;
-
         }
 
         private readonly IStreetRepository streetRepository;
@@ -73,7 +72,7 @@ namespace PolyTeam.Hackaton.Controllers
             var reguestGET =
                 WebRequest.Create("http://nominatim.openstreetmap.org/reverse?format=xml&lat=" +
                 lat.ToString(new CultureInfo("en-US")) + "&lon=" + lon.ToString(new CultureInfo("en-US")) +
-                "&addressdetails=1&accept-language=ru");
+                "&addressdetails=1&accept-language=uk");
 
             reguestGET.Proxy = null;
 

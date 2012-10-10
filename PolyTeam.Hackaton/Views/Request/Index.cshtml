@@ -5,10 +5,8 @@
 <link href="@Url.Content("~/Content/style-map.css")" rel="stylesheet" type="text/css" />
 
 <script src="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.js"></script>
-<script src="@Url.Content("~/Scripts/autocompletion.js")"></script>
-
 <div id="map"></div>
-<script src="/Scripts/map.js"></script>    
+<script src="@Url.Content("~/Scripts/mapandautocompletion.js")"></script>
 
 @using (Html.BeginForm("Submit", "Request"))
 {
@@ -30,6 +28,7 @@
                 @Html.TextBoxFor(m => m.Flat)
             </div>
             <div class="editor-field field">
+                @Html.LabelFor(m => m.ProblemId, "Проблема")
                 @Html.DropDownListFor(model => model.ProblemId, Model.ProblemList, "Оберіть")
             </div>
             <div class='SubmitButton'>

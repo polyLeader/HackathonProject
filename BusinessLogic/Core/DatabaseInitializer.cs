@@ -8,7 +8,6 @@ using BusinessLogic.Domain;
 using BusinessLogic.Core;
 using ParseHelpers;
 
-
 namespace BusinessLogic.Core
 {
     public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DatabaseContext>

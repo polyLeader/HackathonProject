@@ -24,7 +24,6 @@
     marker.on('dragend', onClickAndDragMarker);
 
     function onClickAndDragMarker(event) {
-
         var lat = 0.0;
         var lng = 0.0;
 
@@ -121,7 +120,7 @@
         }
         else {
             $('input#House, input#Flat, select#ProblemId').attr('disabled', 'disabled');
-            dropList.html("");
+            dropList.html('');
             return;
         }
 
@@ -148,15 +147,16 @@
 
             var idx;
 
-            if (current.index() == -1) idx = -1;
-            else idx = current.index();
+            var nums = $('.drop_element:last').index();
 
-            if (idx + keyCode >= elementsNum || idx + keyCode < 0) return;
+            idx = current.index();
+
+            if (idx + keyCode > nums || idx + keyCode < 0) return;
 
             current.removeClass('active');
 
             if (keyCode == -1 && idx < 0) {
-                idx = elementsNum - 1;
+                idx = nums;
             }
             else {
                 idx += keyCode;
@@ -165,10 +165,6 @@
             var next = $('.drop_element:eq(' + idx + ')').addClass('active');
 
             $(this).val(next.text());
-
-            if (keyCode == -1) {
-
-            }
         }
     });
 
@@ -187,7 +183,6 @@
             var element = $('.drop_element.active');
 
             if (element.index() != -1) {
-                $('input#Street').val(element.html());
                 $('#drop_list').html('');
                 $('input#House, input#Flat, select#ProblemId').removeAttr('disabled');
                 $('input#House').focus();

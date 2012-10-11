@@ -43,15 +43,16 @@ form
     margin:0 !important;
 }
 
-#drop_list{
+#drop_list 
+{
     background: #FFF;
+    display: block;
     width: 220px;
     overflow: auto;
     margin-left: 15px;
     margin-top: -15px;
     position: absolute;
     border-radius: 5px;
-    opacity: 0.8;
 }
 
 #Street

@@ -45,7 +45,7 @@ namespace BusinessLogic.Core
             problem = new Problem { Name = "Ліфт" };
             context.Problems.Add(problem);
 
-            var streets = Parser.GetStreets("streets.xml"); // Get streets from Dropbox server
+            var streets = Parser.GetStreets(null); // Get streets from Dropbox server
 
             foreach (var street in streets)
             {
@@ -54,7 +54,7 @@ namespace BusinessLogic.Core
 
             var user = new User();
 
-            var deputies = Parser.GetDeputies("deputies.list"); // Get deputies from Dropbox server
+            var deputies = Parser.GetDeputies(null); // Get deputies from Dropbox server
 
             foreach (var deputy in deputies)
             {

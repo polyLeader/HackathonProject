@@ -74,6 +74,7 @@
     });
 
     var elementsNum = 10;
+    var menuClicked = false;
     var streetFound = false;
 
     $('input#Street').attr('autocomplete', 'off').focus();
@@ -127,6 +128,7 @@
         if (findCount) {
             for (var j = 0; j < elementsNum && j < findCount; j++) {
                 dropList.append('<div class="drop_element">' + findArray[j] + '</div>');
+                menuClicked = false;
             }
             streetFound = true;
         }
@@ -137,11 +139,8 @@
             return;
         }
 
-        var keyCode = e.which;
-
-        if (keyCode == 38 || keyCode == 40) {
-
-            keyCode += -40 + 1;
+        if (e.which == 38 || e.which == 40) {
+            var iterator = e.which - 40 + 1;
 
             var current = $('.drop_element.active');
 
@@ -151,20 +150,24 @@
 
             idx = current.index();
 
-            if (idx + keyCode > nums || idx + keyCode < 0) return;
+            if (idx + iterator > nums || idx + iterator < 0) return;
 
             current.removeClass('active');
 
-            if (keyCode == -1 && idx < 0) {
+            if (iterator == -1 && idx < 0) {
                 idx = nums;
             }
             else {
-                idx += keyCode;
+                idx += iterator;
             }
 
             var next = $('.drop_element:eq(' + idx + ')').addClass('active');
 
             $(this).val(next.text());
+
+            if (iterator == -1) {
+                e.preventDefault();
+            }
         }
     });
 
@@ -172,6 +175,7 @@
         if ($('#drop_list:visible') != -1) {
             $('#drop_list').html('');
             $('input#House, input#Flat, select#ProblemId').removeAttr('disabled');
+            menuClicked = true;
             $('input#House').focus();
             return false;
         }
@@ -186,11 +190,11 @@
                 $('#drop_list').html('');
                 $('input#House, input#Flat, select#ProblemId').removeAttr('disabled');
                 $('input#House').focus();
-            } else if (!streetFound) {
+            } else if (!streetFound | !menuClicked) {
                 $('input#House, input#Flat, select#ProblemId').attr('disabled', 'disabled');
-            } else {
-                $('#drop_list').hide();
             }
+            
+            $('#drop_list').hide();
         }
     });
 

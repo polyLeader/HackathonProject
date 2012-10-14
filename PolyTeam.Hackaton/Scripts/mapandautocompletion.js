@@ -52,7 +52,7 @@
                         $('input#House').val(response.HouseNumber);
                         $('input#Flat').focus();
                     } else {
-                        $('input#House').val("");
+                        $('input#House').val('');
                         $('input#House').focus();
                     }
                 }
@@ -193,7 +193,7 @@
             } else if (!streetFound | !menuClicked) {
                 $('input#House, input#Flat, select#ProblemId').attr('disabled', 'disabled');
             }
-            
+
             $('#drop_list').hide();
         }
     });
@@ -228,6 +228,49 @@
                     }
                 }
             });
+        }
+    });
+
+    $('select#ProblemId').change(function () {
+        var params;
+
+        switch ($(this).find('option:selected').attr('value')) {
+            case '1':
+                params = { iconUrl: 'Content/img/drop.png', iconSize: [60, 50], iconAnchor: [30, 45] };
+                break;
+                
+            case '2':
+                params = { iconUrl: 'Content/img/gaz.png', iconSize: [50, 50], iconAnchor: [25, 35] };
+                break;
+
+            case '3':
+                params = { iconUrl: 'Content/img/sink.png', iconSize: [60, 60], iconAnchor: [30, 60] };
+                break;
+
+            case '4':
+                params = { iconUrl: 'Content/img/roof.png', iconSize: [60, 60], iconAnchor: [30, 40] };
+                break;
+
+            case '5':
+                params = { iconUrl: 'Content/img/electric.png', iconSize: [60, 60], iconAnchor: [30, 50]};
+                break;
+
+            case '6':
+                params = { iconUrl: 'Content/img/build.png', iconSize: [40, 50], iconAnchor: [20, 40] };
+                break;
+
+            case '7':
+                params = { iconUrl: 'Content/img/elevator.png', iconSize: [50, 50], iconAnchor: [25, 40] };
+                break;
+                
+            default:
+                params = null;
+        }
+
+        if (params == null) {
+            marker.setIcon(new L.Icon.Default());
+        } else {
+            marker.setIcon(new L.Icon(params));
         }
     });
 });

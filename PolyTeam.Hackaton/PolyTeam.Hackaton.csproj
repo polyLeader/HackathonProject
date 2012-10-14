@@ -99,6 +99,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\build.png" />
+    <Content Include="Content\img\drop.png" />
+    <Content Include="Content\img\electric.png" />
+    <Content Include="Content\img\elevator.png" />
+    <Content Include="Content\img\gaz.png" />
     <Content Include="Content\img\roof.png" />
     <Content Include="Content\img\roof_icon.png" />
     <Content Include="Content\img\sink-shadow.png" />

@@ -12,18 +12,11 @@ namespace BusinessLogic.Core
         SocialRequest Update(SocialRequest socialRequest);
         void Delete(SocialRequest socialRequest);
         IList<SocialRequest> GetAll();
-        IList<SocialRequest> GetByStreetId(int streetId);
-        IList<SocialRequest> GetByUserId(int userId);
-        IList<SocialRequest> GetByProblemId(int problemId);
-        IList<SocialRequest> GetAllNotDone();
-        IList<SocialRequest> GetAllDone();
-        IList<SocialRequest> GetAllDoneByParty(string party);
-        IList<SocialRequest> GetAllInProcessByParty(string party);
+        IList<SocialRequest> GetById(int Id, string typeId);
+        IList<SocialRequest> GetAllNotDoneOrDone(bool done);
+        IList<SocialRequest> GetAllDoneOrInProcessByParty(string party,bool done);
         int CounterAllRequests();
-        int CounterAllDoneRequests();
-        int CounterAllInProcessRequests();
-        int CounterAllNotInProcessRequests();
-        int CounterAllDoneRequestsByParty(string party);
-        int CounterAllInprocessRequestsByParty(string party);
+        int CounterAllDoneNoteInProcessRequests(bool? done);
+        int CounterAllDoneOrInprocessRequestsByParty(string party,bool done);
     }
 }

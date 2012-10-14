@@ -43,63 +43,46 @@ namespace BusinessLogic.Core
             return _databaseContext.SocialRequests.ToArray();
         }
 
-        public IList<SocialRequest> GetByStreetId(int streetId)
+        public IList<SocialRequest> GetById(int Id,string typeId)
         {
-            return _databaseContext.SocialRequests.Where(x => x.StreetId == streetId).ToArray();
+            if (typeId == "Street")
+                return _databaseContext.SocialRequests.Where(x => x.StreetId == Id).ToArray();
+            if (typeId == "User")
+                return _databaseContext.SocialRequests.Where(x => x.UserId == Id).ToArray();
+            return _databaseContext.SocialRequests.Where(x => x.ProblemId == Id).ToArray();
         }
 
-        public IList<SocialRequest> GetByUserId(int userId)
+        public IList<SocialRequest> GetAllNotDoneOrDone(bool done)
         {
-            return _databaseContext.SocialRequests.Where(x => x.UserId == userId).ToArray();
+            if (done)
+                return _databaseContext.SocialRequests.Where(x => x.Done == true).ToArray();
+            return _databaseContext.SocialRequests.Where(x => x.Done == false).ToArray();   
         }
 
-        public IList<SocialRequest> GetByProblemId(int problemId)
-        {
-            return _databaseContext.SocialRequests.Where(x => x.ProblemId == problemId).ToArray();
-        }
-
-        public IList<SocialRequest> GetAllNotDone()
-        {
-            return _databaseContext.SocialRequests.Where(x => x.Done == false).ToArray();
-        }
-
-        public IList<SocialRequest> GetAllDone()
-        {
-            return _databaseContext.SocialRequests.Where(x => x.Done == true).ToArray();
-        }
-
-        public IList<SocialRequest> GetAllDoneByParty(string party)
+        public IList<SocialRequest> GetAllDoneOrInProcessByParty(string party, bool done)
         {
             // Шукаем всех депутов с заданой партией
             var deputies = _databaseContext.Users.Where(x => (x.Party == party && x.RoleId == 1));
 
-            var allDone = new List<SocialRequest>();
+            var all = new List<SocialRequest>();
 
             // Выбираются все запросы, где указан депутат с запрошенной партией
             // и помещается в окончательный список
-            foreach (var list in deputies.Select(deputy => _databaseContext.SocialRequests.Where(x => (x.Done == true && x.DeputyId == deputy.Id)).ToList()))
-            {
-                allDone.AddRange(list);
-            }
-
-            return allDone;
-        }
-
-        public IList<SocialRequest> GetAllInProcessByParty(string party)
-        {
-            // Шукаем всех депутов с заданой партией
-            var deputies = _databaseContext.Users.Where(x => (x.Party == party && x.RoleId == 1));
-
-            var allDone = new List<SocialRequest>();
-
-            // Выбираются все запросы, где указан депутат с запрошенной партией
-            // и помещается в окончательный список
+            if (!done)
             foreach (var list in deputies.Select(deputy => _databaseContext.SocialRequests.Where(x => (x.Done == false && x.DeputyId == deputy.Id)).ToList()))
             {
-                allDone.AddRange(list);
+                all.AddRange(list);
+            }
+            else
+            {
+                foreach (var list in deputies.Select(deputy => _databaseContext.SocialRequests.Where(x => (x.Done == true && x.DeputyId == deputy.Id)).ToList()))
+                {
+                    all.AddRange(list);
+                }
+
             }
 
-            return allDone;
+            return all;
         }
 
         public int CounterAllRequests()
@@ -107,30 +90,18 @@ namespace BusinessLogic.Core
             return _databaseContext.SocialRequests.Count();
         }
 
-        public int CounterAllDoneRequests()
-        {
-            return _databaseContext.SocialRequests.Where(x => x.Done == true).ToArray().Count();
-        }
-
-        public int CounterAllInProcessRequests()
-        {
-            return _databaseContext.SocialRequests.Where(x => x.Done == false).ToArray().Count();
-        }
-
-        public int CounterAllNotInProcessRequests()
-        {
+        public int CounterAllDoneNoteInProcessRequests(bool? done)
+        {   if (done == true)
+                return _databaseContext.SocialRequests.Where(x => x.Done == true).ToArray().Count();
+            if (done == false)
+                return _databaseContext.SocialRequests.Where(x => x.Done == false).ToArray().Count();
             return _databaseContext.SocialRequests.Where(x => x.Done == null).ToArray().Count();
         }
 
-        public int CounterAllDoneRequestsByParty(string party)
+        public int CounterAllDoneOrInprocessRequestsByParty(string party, bool done)
         {
-            return this.GetAllDoneByParty(party).Count;
+            return this.GetAllDoneOrInProcessByParty(party,done).Count;
         }
-
-        public int CounterAllInprocessRequestsByParty(string party)
-        {
-            return this.GetAllInProcessByParty(party).Count;
-        } 
 
     }
 }

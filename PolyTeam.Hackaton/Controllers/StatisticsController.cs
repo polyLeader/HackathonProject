@@ -39,7 +39,7 @@ namespace PolyTeam.Hackaton.Controllers
         [HttpGet]
         public JsonResult NotDone()
         {
-            var list = _socialRequestRepository.GetAllNotDone();
+            var list = _socialRequestRepository.GetAllNotDoneOrDone(false);
             
             // TODO Now not work
             //return this.Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.StreetId}).ToList(), JsonRequestBehavior.AllowGet);
@@ -49,7 +49,7 @@ namespace PolyTeam.Hackaton.Controllers
         [HttpGet]
         public JsonResult Done()
         {
-            var list = _socialRequestRepository.GetAllDone();
+            var list = _socialRequestRepository.GetAllNotDoneOrDone(true);
             
             // TODO now not work
             /*return Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street,
@@ -76,7 +76,7 @@ namespace PolyTeam.Hackaton.Controllers
         [HttpGet]
         public  JsonResult InProcessByParty(string party)
         {
-            var list = _socialRequestRepository.GetAllInProcessByParty(party);
+            var list = _socialRequestRepository.GetAllDoneOrInProcessByParty(party,false);
             return
                 Json(
                     list.Select(
@@ -102,7 +102,7 @@ namespace PolyTeam.Hackaton.Controllers
         [HttpGet]
         public JsonResult DoneByParty(string party)
         {
-            var list = _socialRequestRepository.GetAllDoneByParty(party);
+            var list = _socialRequestRepository.GetAllDoneOrInProcessByParty(party,true);
             return
                 Json(
                     list.Select(

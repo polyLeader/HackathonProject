@@ -13,7 +13,7 @@ namespace BusinessLogic.Core
         void Delete(SocialRequest socialRequest);
         IList<SocialRequest> GetAll();
         IList<SocialRequest> GetById(int Id, string typeId);
-        IList<SocialRequest> GetAllNotDoneOrDone(bool done);
+        IList<SocialRequest> GetAllNotDoneOrDone(bool ? done);
         IList<SocialRequest> GetAllDoneOrInProcessByParty(string party,bool done);
         int CounterAllRequests();
         int CounterAllDoneNoteInProcessRequests(bool? done);

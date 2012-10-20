@@ -23,12 +23,14 @@ namespace PolyTeam.Hackaton.Controllers
         private readonly ISocialRequestRepository _socialRequestRepository;
         private readonly IUserProcessor _userProcessor;
         private readonly IStreetRepository _streetRepository;
+        private readonly IUserRepository _userRepository;
 
-        public StatisticsController(IProblemRepository repository, ISocialRequestRepository socialRequestRepository, IUserProcessor userProcessor)
+        public StatisticsController(IProblemRepository repository, ISocialRequestRepository socialRequestRepository, IUserProcessor userProcessor,IUserRepository userRepository)
         {
             this._problemRepository = repository;
             this._socialRequestRepository = socialRequestRepository;
             this._userProcessor = userProcessor;
+            this._userRepository = userRepository;
         }
 
         public ActionResult Index()
@@ -37,29 +39,24 @@ namespace PolyTeam.Hackaton.Controllers
         }
 
         [HttpGet]
-        public JsonResult NotDone()
+        public JsonResult NotDoneOrDone(bool done)
         {
-            var list = _socialRequestRepository.GetAllNotDoneOrDone(false);
+            var list = _socialRequestRepository.GetAllNotDoneOrDone(done);
             
-            // TODO Now not work
-            //return this.Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.StreetId}).ToList(), JsonRequestBehavior.AllowGet);
-            return null;
-        }
-
-        [HttpGet]
-        public JsonResult Done()
-        {
-            var list = _socialRequestRepository.GetAllNotDoneOrDone(true);
-            
-            // TODO now not work
-            /*return Json(list.Select(socialRequestModel => new SocialRequestModel {Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = socialRequestModel.Street,
-                                                                                                         Deputy = new DeputyModel { Name = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).FirstName ,
-                                                                                                                                    LastName = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).LastName,
-                                                                                                                                    Party = userProcessor.GetUserByName(socialRequestModel.Deputy.FirstName).Party
-                                                                                                         }
-            }).ToList(),JsonRequestBehavior.AllowGet);*/
-
-            return null;
+            if (!done)
+                return this.Json(list.Select(socialRequestModel => new SocialRequestModel { Flat = socialRequestModel.Flat, House = socialRequestModel.House, Street = _streetRepository.GetById(socialRequestModel.StreetId).Name }).ToList(), JsonRequestBehavior.AllowGet);
+            return Json(list.Select(socialRequestModel => new SocialRequestModel
+            {
+                Flat = socialRequestModel.Flat,
+                House = socialRequestModel.House,
+                Street = _streetRepository.GetById(socialRequestModel.StreetId).Name,
+                Deputy = new DeputyModel
+                {
+                    FirstName = _userProcessor.GetUserById((int)socialRequestModel.DeputyId).FirstName,
+                    LastName = _userProcessor.GetUserById((int)socialRequestModel.DeputyId).LastName,
+                    Party = _userProcessor.GetUserById((int)socialRequestModel.DeputyId).Party
+                }
+            }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -74,9 +71,9 @@ namespace PolyTeam.Hackaton.Controllers
         }
 
         [HttpGet]
-        public  JsonResult InProcessByParty(string party)
+        public  JsonResult DoneOrInProcessByParty(string party,bool done)
         {
-            var list = _socialRequestRepository.GetAllDoneOrInProcessByParty(party,false);
+            var list = _socialRequestRepository.GetAllDoneOrInProcessByParty(party,done);
             return
                 Json(
                     list.Select(
@@ -89,7 +86,7 @@ namespace PolyTeam.Hackaton.Controllers
                                 Deputy =
                                     new DeputyModel
                                         {
-                                            Name =
+                                            FirstName =
                                                 _userProcessor.GetUserById((int) socialRequestModel.DeputyId).FirstName,
                                             LastName =
                                                 _userProcessor.GetUserById((int) socialRequestModel.DeputyId).LastName,
@@ -99,28 +96,20 @@ namespace PolyTeam.Hackaton.Controllers
                     JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public JsonResult DoneByParty(string party)
+        public JsonResult AllStatByParty()
         {
-            var list = _socialRequestRepository.GetAllDoneOrInProcessByParty(party,true);
+            var listUser = _userRepository.GetAll();
+            var listParty = new List<string>();
+            foreach (var tParty in listUser)
+            {
+                if (tParty.RoleId == 1)// депутат
+                
+                    if (!listParty.Contains(tParty.Party))
+                        listParty.Add(tParty.Party);
+            }
+
             return
-                Json(
-                    list.Select(
-                        socialRequestModel =>
-                        new SocialRequestModel
-                            {
-                                Flat = socialRequestModel.Flat,
-                                House = socialRequestModel.House,
-                                Street = _streetRepository.GetNameById(socialRequestModel.StreetId),
-                                Deputy =
-                                    new DeputyModel
-                                        {
-                                            Name = _userProcessor.GetUserById((int) socialRequestModel.DeputyId).FirstName,
-                                            LastName = _userProcessor.GetUserById((int) socialRequestModel.DeputyId).LastName,
-                                            Party = _userProcessor.GetUserById((int) socialRequestModel.DeputyId).Party
-                                        }
-                            }).ToList(),
-                    JsonRequestBehavior.AllowGet);
+                Json(listParty.Select(party => new PartyModel{Name = party,Done = _socialRequestRepository.CounterAllDoneOrInprocessRequestsByParty(party,true),InProcess = _socialRequestRepository.CounterAllDoneOrInprocessRequestsByParty(party,false)}).ToList(),JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

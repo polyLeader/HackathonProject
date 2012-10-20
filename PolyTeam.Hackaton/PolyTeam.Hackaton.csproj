@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\DeputyModel.cs" />
+    <Compile Include="Models\PartyModel.cs" />
     <Compile Include="Models\ProblemModel.cs" />
     <Compile Include="Models\SocialRequestModel.cs" />
     <Compile Include="Models\UserModel.cs" />

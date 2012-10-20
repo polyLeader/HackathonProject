@@ -26,5 +26,7 @@ namespace BusinessLogic.Core
         User GetById(int id);
 
         int GetCount();
+
+        List<User> GetAll();
     }
 }

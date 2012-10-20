@@ -83,5 +83,10 @@ namespace BusinessLogic.Core
         {
             return System.Web.Security.Roles.IsUserInRole(userName, "Deputy");
         }
+
+        public List<User> GetAll()
+        {
+            return this.dataBaseContext.Users.ToList();
+        }
     }
 }

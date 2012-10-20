@@ -52,10 +52,14 @@ namespace BusinessLogic.Core
             return _databaseContext.SocialRequests.Where(x => x.ProblemId == Id).ToArray();
         }
 
-        public IList<SocialRequest> GetAllNotDoneOrDone(bool done)
+        public IList<SocialRequest> GetAllNotDoneOrDone(bool ? done)
         {
-            if (done)
+            if (done == true)
                 return _databaseContext.SocialRequests.Where(x => x.Done == true).ToArray();
+            else if (done == null)
+            {
+                return _databaseContext.SocialRequests.Where(x => x.Done == null).ToArray();   
+            }
             return _databaseContext.SocialRequests.Where(x => x.Done == false).ToArray();   
         }
 

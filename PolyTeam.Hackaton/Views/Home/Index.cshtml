@@ -18,40 +18,11 @@
     </head>
     <body>
         <div id="map"></div> 
-        @using (Html.BeginForm("LogOn","Account")) {
-            <div class="Form">
-                <fieldset>
-                    <legend>Інформація користувача</legend>
+        
+        <div>
+            @Html.Partial("_LogOnPartial")
+        </div>
 
-                    <div class="editor-label field" >
-                        @Html.LabelFor(m => m.UserName)
-                    </div>
-                    <div class="editor-label field" >
-                        @Html.TextBoxFor(m => m.UserName)
-                        @Html.ValidationMessageFor(m => m.UserName)
-                    </div>
-
-                    <div class="editor-label field" >
-                        @Html.LabelFor(m => m.Password)
-                    </div>
-                    <div class="editor-label field" >
-                        @Html.PasswordFor(m => m.Password)
-                        @Html.ValidationMessageFor(m => m.Password)
-                    </div>
-
-                    <div class="editor-label field" >
-                        @Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe)
-                    </div>
-                    <div class="SubmitButton button_own" >
-                        <button type="submit" value="Увійти">Увійти</button>
-                    </div>
-                    <div class="RegisterButton button_own" >
-                        <button type="submit">@Html.ActionLink("Реєстрація", "Register", "Account")</button>
-                    </div>
-                </fieldset>
-            </div>
-        }
         <div id="info">
             <div class="triangle"></div>
             <h3>Опис</h3>

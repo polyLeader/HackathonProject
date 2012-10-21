@@ -40,20 +40,18 @@ namespace PolyTeam.Hackaton.Controllers
                 if (this.userProcessor.LogOn(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    return RedirectToAction("Index","Request");
-                }
-                else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "Request");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Ім`я користувача чи пароль є невірними.");
+                    ModelState.AddModelError("LogOnError", "Ім`я користувача чи пароль є невірними.");
+                    //return RedirectToAction("Index", "Home", model);
+                    return View(model);
                 }
+            }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("Index", "Home", model);
+            return RedirectToAction("Index", "Home");
         }
 
         //

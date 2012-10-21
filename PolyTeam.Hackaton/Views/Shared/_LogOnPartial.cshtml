@@ -1,7 +1,41 @@
-﻿@if(Request.IsAuthenticated) {
-    <text>Welcome <strong>@User.Identity.Name</strong>!
-    [ @Html.ActionLink("Вийти", "LogOff", "Account") ]</text>
+﻿@model PolyTeam.Hackaton.Models.LogOnModel
+
+@{
+    ViewBag.Title = "Log On";
 }
-else {
-    @:[ @Html.ActionLink("Увійти", "Index", "Home") ]
-}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@Html.ValidationSummary(true)
+
+ @using (Html.BeginForm("LogOn","Account")) {
+            <div class="Form">
+                <fieldset>
+                    <legend>Інформація користувача</legend>
+					@Html.ValidationMessage("LogOnError")
+                    <div class="editor-label field" >
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+
+                    <div class="editor-label field" >
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+
+                    <div class="editor-label field" >
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                    <div class="SubmitButton button_own" >
+                        <button type="submit" value="Увійти">Увійти</button>
+                    </div>
+                    <div class="RegisterButton button_own" >
+                        <button type="submit">@Html.ActionLink("Реєстрація", "Register", "Account")</button>
+                    </div>
+                </fieldset>
+            </div>
+        }
